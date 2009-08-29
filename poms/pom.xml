@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.gatherdata</groupId>
+    <artifactId>gather-alert</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.gatherdata.gather-alert.build</groupId>
+  <artifactId>shared-plugin-settings</artifactId>
+
+  <name>gather-alert - plugin configuration</name>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>wrappers</module>
+    <module>compiled</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.ops4j</groupId>
+          <artifactId>maven-pax-plugin</artifactId>
+          <!--
+           | enable improved OSGi compilation support for the bundle life-cycle.
+           | to switch back to the standard bundle life-cycle, move this setting
+           | down to the maven-bundle-plugin section
+          -->
+          <extensions>true</extensions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>1.4.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <dependencyManagement>
+      <dependencies>
+          <dependency>
+              <groupId>org.gatherdata.gather-commons</groupId>
+              <artifactId>org.gatherdata.commons.core</artifactId>
+              <version>${gather-commons.version}</version>
+          </dependency>
+
+          <dependency>
+              <groupId>org.osgi</groupId>
+              <artifactId>osgi_R4_core</artifactId>
+              <version>1.0</version>
+              <scope>provided</scope>
+              <optional>true</optional>
+          </dependency>
+          <dependency>
+              <groupId>org.osgi</groupId>
+              <artifactId>osgi_R4_compendium</artifactId>
+              <version>1.0</version>
+              <scope>provided</scope>
+              <optional>true</optional>
+          </dependency>
+          <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>${junit.version}</version>
+              <scope>test</scope>
+          </dependency>
+          <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit-dep</artifactId>
+              <version>${junit.version}</version>
+              <scope>test</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.hamcrest</groupId>
+              <artifactId>hamcrest-all</artifactId>
+              <version>${hamcrest.version}</version>
+              <scope>test</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.easymock</groupId>
+              <artifactId>com.springsource.org.easymock</artifactId>
+              <version>${easymock.version}</version>
+              <scope>test</scope>
+          </dependency>
+          <dependency>
+              <groupId>commons-lang</groupId>
+              <artifactId>commons-lang</artifactId>
+              <version>${commons-lang.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.servicemix.bundles</groupId>
+              <artifactId>org.apache.servicemix.bundles.commons-codec</artifactId>
+              <version>${commons-codec.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>commons-collections</groupId>
+              <artifactId>commons-collections</artifactId>
+              <version>${commons-collections.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.ops4j</groupId>
+              <artifactId>peaberry</artifactId>
+              <version>${peaberry.version}</version>
+              <scope>provided</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.ops4j.peaberry.dependencies</groupId>
+              <artifactId>guice</artifactId>
+              <version>${guice.version}</version>
+              <scope>provided</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.servicemix.bundles</groupId>
+              <artifactId>org.apache.servicemix.bundles.aopalliance</artifactId>
+              <version>${aopalliance.version}</version>
+              <scope>provided</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.ops4j.pax.logging</groupId>
+              <artifactId>pax-logging-api</artifactId>
+              <version>${pax-logging.version}</version>
+              <optional>true</optional>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.servicemix.bundles</groupId>
+              <artifactId>org.apache.servicemix.bundles.geronimo-javamail_1.4_provider</artifactId>
+              <version>${geronimo-javamail.version}</version>
+          </dependency>
+
+      </dependencies>
+  </dependencyManagement>
+</project>

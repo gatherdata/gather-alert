@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <parent>
+        <groupId>org.gatherdata</groupId>
+        <artifactId>gather-alert</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.gatherdata.gather-alert.build</groupId>
+    <artifactId>provision</artifactId>
+
+    <name>gather-alert - imported bundles</name>
+
+    <packaging>pom</packaging>
+
+    <!--
+    DEPRECATED - don't use this. All dependencies should be explicitly listed 
+    in each module, using dependencyManagement from poms/pom.xml and deployed
+    through a provisioning feature.
+    -->
+
+
+</project>

@@ -3,12 +3,15 @@ package org.gatherdata.alert.core.osgi;
 import static com.google.inject.Guice.createInjector;
 import static org.ops4j.peaberry.Peaberry.osgiModule;
 
+import org.gatherdata.alert.core.spi.AlertService;
 import org.ops4j.peaberry.Export;
 import java.util.Dictionary;
 import java.util.Properties;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import com.google.inject.Inject;
 
 
 /**
@@ -17,6 +20,10 @@ import org.osgi.framework.BundleContext;
 public final class OSGiActivator
     implements BundleActivator
 {
+    
+    @Inject
+    Export<AlertService> alertService;
+    
     /**
      * Called whenever the OSGi framework starts our bundle
      */
@@ -24,8 +31,6 @@ public final class OSGiActivator
         throws Exception
     {
     	createInjector(osgiModule(bc), new GuiceBindingModule()).injectMembers(this);
-    	
-    	System.out.println("STARTED Gather Alert Core");
     }
 
     /**
@@ -34,9 +39,6 @@ public final class OSGiActivator
     public void stop( BundleContext bc )
         throws Exception
     {
-        System.out.println( "STOPPING Gather Alert Core" );
-
-        // no need to unregister our service - the OSGi framework handles it for us
     }
 }
 

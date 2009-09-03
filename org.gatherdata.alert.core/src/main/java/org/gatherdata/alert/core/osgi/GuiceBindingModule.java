@@ -5,6 +5,9 @@ import static org.ops4j.peaberry.Peaberry.service;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 
+import org.gatherdata.alert.core.internal.AlertServiceImpl;
+import org.gatherdata.alert.core.spi.AlertService;
+import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.ops4j.peaberry.Export;
 
 import static org.ops4j.peaberry.util.TypeLiterals.iterable;
@@ -22,10 +25,10 @@ public class GuiceBindingModule extends AbstractModule {
         @Override 
         protected void configure() {
                 // imports
-                //bind(iterable(ArchiverDao.class)).toProvider(service(ArchiverDao.class).multiple());
+                bind(AlertServiceDao.class).toProvider(service(AlertServiceDao.class).single());
                 
                 // exports
-                //bind(export(EnvelopeArchiver.class)).toProvider(service(new EnvelopeArchiverImpl()).export());
+                bind(export(AlertService.class)).toProvider(service(new AlertServiceImpl()).export());
                 
         }
 }

@@ -50,7 +50,13 @@
               <artifactId>org.gatherdata.commons.core</artifactId>
               <version>${gather-commons.version}</version>
           </dependency>
-
+          <dependency>
+              <groupId>org.gatherdata.gather-commons</groupId>
+              <artifactId>org.gatherdata.commons.core</artifactId>
+              <classifier>testing</classifier>
+              <version>${gather-commons.version}</version>
+              <scope>test</scope>
+          </dependency>
           <dependency>
               <groupId>org.osgi</groupId>
               <artifactId>osgi_R4_core</artifactId>
@@ -132,6 +138,23 @@
               <groupId>org.apache.servicemix.bundles</groupId>
               <artifactId>org.apache.servicemix.bundles.geronimo-javamail_1.4_provider</artifactId>
               <version>${geronimo-javamail.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.servicemix.bundles</groupId>
+              <artifactId>org.apache.servicemix.bundles.joda-time</artifactId>
+              <version>${joda-time.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.bsf</groupId>
+              <artifactId>bsf-api</artifactId>
+              <version>${apache-bsf.version}</version>
+              <scope>compile</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.bsf</groupId>
+              <artifactId>bsf-all</artifactId>
+              <version>${apache-bsf.version}</version>
+              <scope>compile</scope>
           </dependency>
 
       </dependencies>

@@ -1,16 +1,18 @@
 package org.gatherdata.alert.core.internal;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.activation.MimeType;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.gatherdata.alert.core.model.Rule;
+import org.gatherdata.alert.core.model.ActionPlan;
+import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.core.spi.AlertService;
-import org.gatherdata.alert.core.spi.RuleDao;
+
+import com.google.inject.Inject;
 
 /**
  * Concrete implementation of the AlertService.
@@ -19,24 +21,37 @@ import org.gatherdata.alert.core.spi.RuleDao;
 public class AlertServiceImpl implements AlertService {
 	Log log = LogFactory.getLog(AlertService.class);
 	
-	private List<RuleDao> ruleDaos;
+	@Inject
+    protected AlertServiceDao dao;
 	
-	public void setRuleDaos(List<RuleDao> ruleDaos) {
-		this.ruleDaos = ruleDaos;
-	}
-
-	public Collection<Rule> getRulesFor(MimeType type, String qualifier) {
-		Collection<Rule> applicableRules = new HashSet<Rule>();
-		
-		if (ruleDaos != null) {
-			for (RuleDao ruleDao : ruleDaos) {
-				applicableRules.addAll(ruleDao.getRulesFor(type, qualifier));
-			}
-		} else {
-			log.warn("AlertService has no RuleDao implementations to use. Please check the system configuration.");
-		}
-	    return null;
+    public boolean exists(URI uidOfActionPlan) {
+        return dao.exists(uidOfActionPlan);
     }
+
+    public ActionPlan get(URI uidOfActionPlan) {
+        dao.beginTransaction();
+        ActionPlan foundPlan = dao.get(uidOfActionPlan);
+        dao.endTransaction();
+        return foundPlan;
+    }
+
+    public Iterable<ActionPlan> getAll() {
+        return dao.getAll();
+    }
+
+    public void remove(URI uidOfActionPlan) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public ActionPlan save(ActionPlan planToSave) {
+        return dao.save(planToSave);
+    }
+
+    public Iterable<RuleSet> getActiveRulesetsFor(String context) {
+        return dao.getActiveRulesetsFor(context);
+    }
+	
 
 
 }

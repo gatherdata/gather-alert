@@ -1,18 +1,17 @@
 package org.gatherdata.alert.core.spi;
 
-import java.util.Collection;
 
-import javax.activation.MimeType;
-
-import org.gatherdata.alert.core.model.Rule;
+import org.gatherdata.alert.core.model.ActionPlan;
+import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.commons.spi.StorageService;
 
 /**
- * A service which accepts Envelopes, applying rules to determine whether a
- * notification should be sent.
+ * A service for managing alert ActionPlans, and the EventTypes,
+ * RuleSets and PlannedNotifications which they contain.
  *
  */
-public interface AlertService {
-
-	public Collection<Rule> getRulesFor(MimeType type, String qualifier);
-	
+public interface AlertService extends StorageService<ActionPlan> {
+    
+    public Iterable<RuleSet> getActiveRulesetsFor(String context);
+    
 }

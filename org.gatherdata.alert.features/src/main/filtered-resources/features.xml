@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features>     
+    <feature name="gather-alert.core" version="${gather-alert.version}">
+        <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.core/${gather-alert.version}</bundle>
+
+    </feature>
+
+    <feature name="gather-alert.languages" version="${gather-alert.version}">
+        <bundle>mvn:${codehaus.release.repository}!org.codehaus.groovy/groovy-all/${groovy.version}</bundle>
+    </feature>
+
+</features>

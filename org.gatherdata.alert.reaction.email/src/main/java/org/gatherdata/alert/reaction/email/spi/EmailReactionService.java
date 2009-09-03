@@ -3,7 +3,6 @@ package org.gatherdata.alert.reaction.email.spi;
 import java.net.URI;
 import java.net.URL;
 
-import org.gatherdata.alert.core.spi.ReactionProvider;
 import org.gatherdata.alert.reaction.email.model.EmailReactor;
 import org.gatherdata.alert.reaction.email.model.GenericEmailReaction;
 
@@ -12,7 +11,7 @@ import org.gatherdata.alert.reaction.email.model.GenericEmailReaction;
  * which may be paired with AlertPredicates into Rules.
  * 
  */
-public interface EmailReactionService extends ReactionProvider, EmailReactor
+public interface EmailReactionService extends EmailReactor
 {
 
 	/**

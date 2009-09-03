@@ -3,9 +3,9 @@ package org.gatherdata.alert.reaction.email.model;
 import java.net.URL;
 import java.util.Map;
 
-import org.gatherdata.alert.core.model.Reaction;
+import org.gatherdata.alert.core.model.PlannedNotification;
 
-public interface EmailReaction extends Reaction {
+public interface EmailReaction extends PlannedNotification {
 
 	public URL getMailtoURL();
 	

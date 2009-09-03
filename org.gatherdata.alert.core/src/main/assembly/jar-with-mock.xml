@@ -1,0 +1,16 @@
+<assembly>
+	<id>mocking</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+            <directory>${project.build.testOutputDirectory}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>**/mock/*</include>
+            </includes>
+		</fileSet>
+	</fileSets>
+</assembly>

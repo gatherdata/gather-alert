@@ -9,9 +9,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
-import org.gatherdata.alert.core.model.Reaction;
+//import org.apache.commons.mail.EmailException;
+//import org.apache.commons.mail.SimpleEmail;
+import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.reaction.email.model.EmailHeaders;
 import org.gatherdata.alert.reaction.email.model.EmailReaction;
 import org.gatherdata.alert.reaction.email.model.GenericEmailReaction;
@@ -37,11 +37,11 @@ public final class EmailReactionServiceImpl implements EmailReactionService {
         }
 	}
 	
-	public Reaction get(URI id) {
+	public PlannedNotification get(URI id) {
 		return null;
 	}
 
-	public List<Reaction> getAll() {
+	public List<PlannedNotification> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -70,6 +70,7 @@ public final class EmailReactionServiceImpl implements EmailReactionService {
     }
 	
 	public void sendEmail(List<InternetAddress> toAddresses, Map<String, String> headers, String body) {		
+		/*
 		SimpleEmail email = new SimpleEmail();
 		email.setHostName(smtpHostName);
 		email.setSmtpPort(smtpPort);
@@ -87,7 +88,7 @@ public final class EmailReactionServiceImpl implements EmailReactionService {
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}
-
+		*/
 	}
 
 }

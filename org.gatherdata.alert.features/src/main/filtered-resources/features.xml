@@ -10,4 +10,18 @@
         <bundle>mvn:${codehaus.release.repository}!org.codehaus.groovy/groovy-all/${groovy.version}</bundle>
     </feature>
 
+    <feature name="gather-alert.st" version="${stringtemplate.version}">
+        <bundle>mvn:org.gatherdata.gather-alert/org.antlr.stringtemplate/${stringtemplate.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/${antlr.version}</bundle>
+    </feature>
+
+    <feature name="gather-alert.velocity" version="${velocity.version}">
+        <bundle>mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.oro/${oro.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.ant/${ant.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jdom/${jdom.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.werken-xpath/${werken-xpath.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.velocity/${velocity.version}</bundle>
+    </feature>
+
 </features>

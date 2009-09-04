@@ -129,6 +129,11 @@
               <scope>provided</scope>
           </dependency>
           <dependency>
+              <groupId>org.gatherdata.gather-commons</groupId>
+              <artifactId>org.ops4j.peaberry.activation</artifactId>
+              <version>${peaberry-activation.version}</version>
+          </dependency>
+          <dependency>
               <groupId>org.ops4j.pax.logging</groupId>
               <artifactId>pax-logging-api</artifactId>
               <version>${pax-logging.version}</version>
@@ -156,6 +161,17 @@
               <version>${apache-bsf.version}</version>
               <scope>compile</scope>
           </dependency>
+          <dependency>
+              <groupId>org.gatherdata.gather-alert</groupId>
+              <artifactId>org.antlr.stringtemplate</artifactId>
+              <version>${stringtemplate.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.servicemix.bundles</groupId>
+              <artifactId>org.apache.servicemix.bundles.velocity</artifactId>
+              <version>${velocity.version}</version>
+          </dependency>
+
 
       </dependencies>
   </dependencyManagement>

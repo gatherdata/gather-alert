@@ -12,6 +12,7 @@ import org.gatherdata.alert.core.model.DetectedEvent;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
+import org.gatherdata.alert.core.spi.TemplateRenderer;
 
 import com.google.inject.Inject;
 
@@ -21,13 +22,16 @@ public class AlertCommandImpl implements Command {
 
     private final Pattern commandPattern = Pattern.compile("^(\\w+)\\s*(\\w+)\\s*(.*)");
 
-    private final Pattern detectCommandPattern = Pattern.compile("^(\\S+)\\s+(.*)");
+    private final Pattern subCommandPattern = Pattern.compile("^(\\S+)\\s+(.*)");
 
     @Inject
     AlertService alertService;
     
     @Inject
     EventDetector eventDetector;
+    
+    @Inject
+    Iterable<TemplateRenderer> renderers;
 
     public void execute(String argString, PrintStream out, PrintStream err) {
         Matcher argMatcher = commandPattern.matcher(argString);
@@ -41,7 +45,7 @@ public class AlertCommandImpl implements Command {
             }
 
             if ("detect".equals(subCommand)) {
-                Matcher filterArguments = detectCommandPattern.matcher(subArguments);
+                Matcher filterArguments = subCommandPattern.matcher(subArguments);
                 if (filterArguments.matches()) {
                     String rulesetContext = filterArguments.group(1);
                     Iterable<RuleSet> rules = alertService.getActiveRulesetsFor(rulesetContext);
@@ -75,6 +79,19 @@ public class AlertCommandImpl implements Command {
                 } else {
                     err.println("AlertService.getAll() returned null. Current AlertServiceDao is probably broken.");    
                 }
+             
+            } else if ("render".equals(subCommand)) { 
+                Matcher filterArguments = subCommandPattern.matcher(subArguments);
+                if (filterArguments.matches()) {
+                    String templateType = filterArguments.group(1);
+                    for (TemplateRenderer renderer : renderers) {
+                        if (renderer.canRender(templateType)) {
+                            String template = filterArguments.group(2);
+                            out.println(renderer.render(template, null));
+                        }
+                    }
+                }
+
             } else {
                 err.println("sorry, '" + subCommand + "' is not a recognized sub-command");
             }

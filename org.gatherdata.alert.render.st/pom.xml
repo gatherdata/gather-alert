@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<relativePath>../poms/compiled/</relativePath>
+		<groupId>org.gatherdata.gather-alert.build</groupId>
+		<artifactId>compiled-bundle-settings</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<bundle.symbolicName>org.gatherdata.alert.render.st</bundle.symbolicName>
+		<bundle.namespace>org.gatherdata.alert.render.st</bundle.namespace>
+	</properties>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.gatherdata.gather-alert</groupId>
+	<artifactId>org.gatherdata.alert.render.st</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<name>gather-alert - StringTemplate renderer</name>
+
+	<packaging>bundle</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi_R4_core</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi_R4_compendium</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.ops4j</groupId>
+			<artifactId>peaberry</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.aopalliance</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ops4j.peaberry.dependencies</groupId>
+			<artifactId>guice</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.gatherdata.gather-commons</groupId>
+			<artifactId>org.ops4j.peaberry.activation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.gatherdata.gather-alert</groupId>
+			<artifactId>org.gatherdata.alert.core</artifactId>
+			<version>${gather-alert.version}</version>
+		</dependency>
+		<dependency>
+              <groupId>org.gatherdata.gather-alert</groupId>
+              <artifactId>org.antlr.stringtemplate</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

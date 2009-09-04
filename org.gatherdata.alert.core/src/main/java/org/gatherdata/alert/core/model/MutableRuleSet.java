@@ -65,6 +65,10 @@ public class MutableRuleSet extends MutableDescribedEntity implements RuleSet {
         return "RuleSet [context=" + context + ", indicatedEventType=" + indicatedEventType + ", isActive="
                 + isActive + ", isSatisfyAll=" + isSatisfyAll + ", predicates=" + predicates + "]";
     }
+
+    public int getPredicateCount() {
+        return this.predicates.size();
+    }
     
 
 }

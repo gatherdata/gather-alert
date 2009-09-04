@@ -1,6 +1,0 @@
-#-----------------------------------------------------------------
-# Use this file to add customized Bnd instructions for the bundle
-#-----------------------------------------------------------------
-
-Bundle-Activator: ${bundle.namespace}.osgi.OSGiActivator
-Embed-Dependency: *;artifactId=org.gatherdata.alert.core;classifier=mocking;scope=compile|runtime;inline=true

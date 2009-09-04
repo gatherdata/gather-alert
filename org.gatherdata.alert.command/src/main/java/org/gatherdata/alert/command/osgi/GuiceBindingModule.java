@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.gatherdata.alert.command.internal.AlertCommandImpl;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
+import org.gatherdata.alert.core.spi.TemplateRenderer;
 import org.osgi.framework.Constants;
 
 import com.google.inject.AbstractModule;
@@ -20,6 +21,7 @@ public class GuiceBindingModule extends AbstractModule {
         // import all ArchiverService
         bind(AlertService.class).toProvider(service(AlertService.class).single());
         bind(EventDetector.class).toProvider(service(EventDetector.class).single());
+        bind(iterable(TemplateRenderer.class)).toProvider(service(TemplateRenderer.class).multiple());
         
         // export the CamelCommandImpl
         Properties ccAttrs = new Properties();

@@ -26,71 +26,60 @@ import org.gatherdata.commons.net.CbidFactory;
 import org.joda.time.DateTime;
 
 public class BsfEventDetector implements EventDetector {
-	private static Log log = LogFactory.getLog(BsfEventDetector.class);
+    private static Log log = LogFactory.getLog(BsfEventDetector.class);
 
-	private ScriptEngineManager scriptEngineManager;
+    private ScriptEngineManager scriptEngineManager;
 
-	public BsfEventDetector() {
-		this.scriptEngineManager = new ScriptEngineManager();
-		List<ScriptEngineFactory> engineFactories = scriptEngineManager
-				.getEngineFactories();
-		log.info("Available ScriptEngineFactories...");
-		for (ScriptEngineFactory factory : engineFactories) {
-			log.info("\t" + factory.getEngineName() + " - "
-					+ factory.getLanguageName() + " " + "ext:"
-					+ factory.getExtensions() + " " + "names:"
-					+ factory.getNames());
-		}
-	}
+    public BsfEventDetector() {
+        this.scriptEngineManager = new ScriptEngineManager();
+        List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();
+        log.info("Available ScriptEngineFactories...");
+        for (ScriptEngineFactory factory : engineFactories) {
+            log.info("\t" + factory.getEngineName() + " - " + factory.getLanguageName() + " " + "ext:"
+                    + factory.getExtensions() + " " + "names:" + factory.getNames());
+        }
+    }
 
-	public Iterable<DetectedEvent> detect(Iterable<RuleSet> usingRules,
-			Map<String, Object> attributes) {
-		Set<DetectedEvent> detectedEvents = new HashSet<DetectedEvent>();
+    public Iterable<DetectedEvent> detect(Iterable<RuleSet> usingRules, Map<String, Object> attributes) {
+        Set<DetectedEvent> detectedEvents = new HashSet<DetectedEvent>();
 
-		DateTime detectionTime = new DateTime();
-		
-		for (RuleSet rule : usingRules) {
-			if (rule.isActive()) {
-				boolean anyMatch = false;
-				boolean allMatch = true;
+        DateTime detectionTime = new DateTime();
 
-				for (LanguageScript predicate : rule.getPredicates()) {
-					ScriptEngine engine = scriptEngineManager
-							.getEngineByName(predicate.getLanguage());
-					if (engine != null) {
-						try {
-							Boolean doesMatch = (Boolean) engine.eval(predicate
-									.getScript(),
-									adaptToScriptContext(attributes));
-							anyMatch |= doesMatch;
-							allMatch &= doesMatch;
+        for (RuleSet rule : usingRules) {
+            if (rule.isActive()) {
+                boolean anyMatch = false;
+                boolean allMatch = true;
 
-						} catch (ScriptException e) {
-							e.printStackTrace();
-						}
-					} else {
-						log
-								.warn("Cant't evaluate predicate for missing language: "
-										+ predicate.getLanguage());
-					}
-				}
+                for (LanguageScript predicate : rule.getPredicates()) {
+                    ScriptEngine engine = scriptEngineManager.getEngineByName(predicate.getLanguage());
+                    if (engine != null) {
+                        try {
+                            Boolean doesMatch = (Boolean) engine.eval(predicate.getScript(),
+                                    adaptToScriptContext(attributes));
+                            anyMatch |= doesMatch;
+                            allMatch &= doesMatch;
 
-				if ((!rule.isSatisfyAll() && anyMatch) || allMatch) {
-					detectedEvents.add(MutableDetectedEvent.createFor(
-							detectionTime,
-							CbidFactory.createCbid(attributes.get("body")
-									.toString()), rule.getIndicatedEventType(),
-							rule));
-				}
-			}
-		}
-		return detectedEvents;
-	}
+                        } catch (ScriptException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        log.warn("Cant't evaluate predicate for missing language: " + predicate.getLanguage());
+                    }
+                }
 
-	private Bindings adaptToScriptContext(Map<String, Object> attributes) {
-		Bindings scriptBindings = new SimpleBindings();
-		scriptBindings.putAll(attributes);
-		return scriptBindings;
-	}
+                if ((!rule.isSatisfyAll() && anyMatch) || allMatch) {
+                    detectedEvents.add(MutableDetectedEvent.createFor(detectionTime, CbidFactory.createCbid(attributes
+                            .get("body").toString()), rule));
+                }
+            }
+        }
+        return detectedEvents;
+    }
+
+    private Bindings adaptToScriptContext(Map<String, Object> attributes) {
+        Bindings scriptBindings = new SimpleBindings();
+        scriptBindings.putAll(attributes);
+        return scriptBindings;
+    }
 
 }

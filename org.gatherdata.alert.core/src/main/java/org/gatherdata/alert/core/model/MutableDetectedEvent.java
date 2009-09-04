@@ -53,13 +53,13 @@ public class MutableDetectedEvent extends MutableEntity implements DetectedEvent
 
     public static CbidFactory uidFactory = new CbidFactory();
     
-	public static DetectedEvent createFor(DateTime detectionDate, URI subjectUid, DetectableEventType eventType, RuleSet ruleset) {
+	public static DetectedEvent createFor(DateTime detectionDate, URI subjectUid, RuleSet ruleset) {
 		MutableDetectedEvent detectedEvent = new MutableDetectedEvent();
-		detectedEvent.setEventType(eventType);
+		detectedEvent.setEventType(ruleset.getIndicatedEventType());
 		detectedEvent.setDateOfDetection(detectionDate);
 		detectedEvent.setDetectedBy(ruleset);
 		detectedEvent.setIndicatedBy(subjectUid);
-		detectedEvent.setUid(uidFactory.createCbid(eventType.toString() + detectedEvent.getDateOfDetection()));
+		detectedEvent.setUid(uidFactory.createCbid(detectedEvent.getEventType().toString() + detectedEvent.getDateOfDetection()));
 		return detectedEvent;
 	}
     

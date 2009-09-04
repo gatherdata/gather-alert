@@ -21,6 +21,7 @@
     <peaberry.version>1.1.1</peaberry.version>
     <guice.version>2.0-SNAPSHOT</guice.version>
     <aopalliance.version>1.0_1</aopalliance.version>
+    <peaberry-activation.version>1.2-SNAPSHOT_1</peaberry-activation.version>
     <joda-time.version>1.5.2_1</joda-time.version>
     <commons-codec.version>1.2_1</commons-codec.version>
     <commons-lang.version>2.4</commons-lang.version>
@@ -33,6 +34,13 @@
     <joda-time.version>1.5.2_1</joda-time.version>
     <apache-bsf.version>3.0-beta2</apache-bsf.version>
     <groovy.version>1.7-beta-1</groovy.version>
+    <stringtemplate.version>3.2-001-SNAPSHOT</stringtemplate.version>
+    <antlr.version>3.0.1_1</antlr.version>
+    <velocity.version>1.5_1</velocity.version>
+    <werken-xpath.version>0.9.4_1</werken-xpath.version>
+    <jdom.version>1.1_1</jdom.version>
+    <ant.version>1.7.0_1</ant.version>
+    <oro.version>2.0.8_1</oro.version>
   </properties>
 
   <packaging>pom</packaging>
@@ -73,27 +81,33 @@
     <module>org.gatherdata.alert.predicate.jpa</module>
     <module>org.apache.commons.email</module>
     <module>org.gatherdata.alert.features</module>
-    <module>org.gatherdata.alert.dao.example</module>
+    <module>org.gatherdata.alert.dao.pojo</module>
     <module>org.gatherdata.alert.detect.bsf</module>
+    <module>org.gatherdata.alert.content.example</module>
+    <module>org.gatherdata.alert.builder</module>
+    <module>org.gatherdata.alert.render.st</module>
+    <module>org.gatherdata.alert.render.velocity</module>
+    <module>org.antlr.stringtemplate</module>
   </modules>
 
   <build>
-      <plugins>
-          <plugin>
-              <groupId>org.ops4j</groupId>
-              <artifactId>maven-pax-plugin</artifactId>
-              <version>1.4</version>
-              <configuration>
-                  <framework>felix</framework>
-                  <profiles>log</profiles>
-                  <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
-                  <noDependencies>true</noDependencies>
-                  <provision>
-                      <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages</param>
-                      <param>scan-features:mvn:org.gatherdata.gather-commons/org.gatherdata.commons.features/${gather-commons.version}/xml/features!/gather-core</param>
-                  </provision>
-              </configuration>
-          </plugin>
-      </plugins>
+    <plugins>
+      <plugin>
+        <groupId>org.ops4j</groupId>
+        <artifactId>maven-pax-plugin</artifactId>
+        <version>1.4</version>
+        <configuration>
+          <framework>felix</framework>
+          <profiles>log,web</profiles>
+          <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
+          <noDependencies>true</noDependencies>
+          <provision>
+            <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages,gather-alert.st,gather-alert.velocity</param>
+            <param>scan-features:mvn:org.gatherdata.gather-commons/org.gatherdata.commons.features/${gather-commons.version}/xml/features!/gather-core</param>
+          </provision>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
+
 </project>

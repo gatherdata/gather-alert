@@ -44,5 +44,7 @@ public interface RuleSet extends DescribedEntity {
      * 
      */
     public abstract Iterable<LanguageScript> getPredicates();
+
+    public abstract int getPredicateCount();
     
 }

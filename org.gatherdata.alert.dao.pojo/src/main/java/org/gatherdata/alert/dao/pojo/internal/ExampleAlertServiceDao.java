@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.MutableDetectableEventType;
+import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 
@@ -20,6 +21,8 @@ public class ExampleAlertServiceDao implements AlertServiceDao {
 
     Map<URI, ActionPlan> uriToActionPlanMap = new HashMap<URI, ActionPlan>();
     Map<String, List<RuleSet>> contextToRuleSetMap = new HashMap<String, List<RuleSet>>();
+
+    Map<URI, List<PlannedNotification>> eventToNotificationMap = new HashMap<URI, List<PlannedNotification>>();
 
     public ExampleAlertServiceDao() {
         ;
@@ -77,7 +80,24 @@ public class ExampleAlertServiceDao implements AlertServiceDao {
     public ActionPlan save(ActionPlan planToSave) {
         uriToActionPlanMap.put(planToSave.getUid(), planToSave);
         save(planToSave.getRuleSet());
+        for(PlannedNotification notification : planToSave.getNotifications()) {
+            save(planToSave.getEventType(), notification);
+        }
         return planToSave;
+    }
+
+    public void save(DetectableEventType eventType, PlannedNotification notification) {
+        List<PlannedNotification> notificationList = eventToNotificationMap.get(eventType.getUid());
+        if (notificationList == null) {
+            notificationList = new ArrayList<PlannedNotification>();
+            eventToNotificationMap.put(eventType.getUid(), notificationList);
+        }
+        notificationList.add(notification);
+    }
+
+    public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

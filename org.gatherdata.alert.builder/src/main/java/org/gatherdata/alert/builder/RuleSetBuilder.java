@@ -4,7 +4,7 @@ import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.MutableRuleSet;
 import org.gatherdata.alert.core.model.RuleSet;
 
-public class RuleSetBuilder {
+public class RuleSetBuilder implements FluentBuilder<RuleSet> {
 
     private final MutableRuleSet ruleset = new MutableRuleSet();
     
@@ -33,10 +33,13 @@ public class RuleSetBuilder {
         return this;
     }
 
-    public RuleSet build(DetectableEventType indicatedEventType) {
-        this.ruleset.setIndicatedEventType(indicatedEventType);
+    public RuleSet build() {
         if (!activeWasSet) ruleset.setActive(true);
         return ruleset;
+    }
+
+    protected void setEventType(DetectableEventType indicatedEventType) {
+        this.ruleset.setIndicatedEventType(indicatedEventType);
     }
     
     

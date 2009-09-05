@@ -10,13 +10,9 @@ import org.gatherdata.commons.model.DescribedEntity;
  *
  */
 public interface PlannedNotification extends DescribedEntity {
-
-    public URI getNotifierUid();
     
-    public String getDestination();
+    public URI getDestination();
     
-    public String getTemplateType();
-    
-    public String getTemplate();
+    public LanguageScript getTemplate();
     
 }

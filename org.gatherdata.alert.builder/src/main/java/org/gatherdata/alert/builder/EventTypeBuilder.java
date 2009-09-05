@@ -8,7 +8,7 @@ import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.MutableDetectableEventType;
 import org.gatherdata.commons.net.CbidFactory;
 
-public class EventTypeBuilder {
+public class EventTypeBuilder implements FluentBuilder<DetectableEventType> {
 
     private final MutableDetectableEventType eventType = new MutableDetectableEventType();
 
@@ -24,7 +24,7 @@ public class EventTypeBuilder {
         ;
     }
         
-    protected DetectableEventType build() {
+    public DetectableEventType build() {
         if (eventType.getName() == null) {
             eventType.setName("overactive imagination");
         }

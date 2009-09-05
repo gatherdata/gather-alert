@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.gatherdata.alert.core.model.PlannedNotification;
 
-public interface EmailReaction extends PlannedNotification {
+public interface EmailReaction  {
 
 	public URL getMailtoURL();
 	

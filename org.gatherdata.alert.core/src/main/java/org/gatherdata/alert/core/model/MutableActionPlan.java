@@ -1,6 +1,8 @@
 package org.gatherdata.alert.core.model;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.gatherdata.commons.model.MutableDescribedEntity;
 
@@ -12,7 +14,7 @@ public class MutableActionPlan extends MutableDescribedEntity implements ActionP
     private static final long serialVersionUID = 1052452988107447955L;
     
     private DetectableEventType eventType;
-    private PlannedNotification plannedNotification;
+    private final List<PlannedNotification> plannedNotifications = new ArrayList<PlannedNotification>();
     private RuleSet ruleset;
 
     public DetectableEventType getEventType() {
@@ -23,12 +25,12 @@ public class MutableActionPlan extends MutableDescribedEntity implements ActionP
         this.eventType = eventType;
     }
 
-    public PlannedNotification getNotification() {
-        return this.plannedNotification;
+    public Iterable<PlannedNotification> getNotifications() {
+        return this.plannedNotifications;
     }
     
-    public void setNotification(PlannedNotification plannedNotification) {
-        this.plannedNotification = plannedNotification;
+    public void add(PlannedNotification plannedNotification) {
+        this.plannedNotifications.add(plannedNotification);
     }
 
     public RuleSet getRuleSet() {
@@ -41,8 +43,7 @@ public class MutableActionPlan extends MutableDescribedEntity implements ActionP
 
     @Override
     public String toString() {
-        return "ActionPlan [eventType=" + eventType + ", plannedNotification=" + plannedNotification
-                + ", ruleset=" + ruleset + "]";
+        return "ActionPlan [eventType=" + eventType + "]";
     }
 
     

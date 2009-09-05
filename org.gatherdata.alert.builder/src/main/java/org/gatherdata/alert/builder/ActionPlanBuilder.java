@@ -4,7 +4,7 @@ import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.MutableActionPlan;
 import org.gatherdata.commons.net.CbidFactory;
 
-public class ActionPlanBuilder {
+public class ActionPlanBuilder implements FluentBuilder<ActionPlan> {
 
     private final MutableActionPlan actionPlan = new MutableActionPlan();
     
@@ -52,7 +52,15 @@ public class ActionPlanBuilder {
     
     
     public ActionPlanBuilder applyingRules(RuleSetBuilder ruleBuilder) {
-        actionPlan.setRuleSet(ruleBuilder.build(actionPlan.getEventType()));
+        ruleBuilder.setEventType(actionPlan.getEventType());
+        actionPlan.setRuleSet(ruleBuilder.build());
+        return this;
+    }
+
+    public ActionPlanBuilder notifying(PlannedNotificationBuilder... plannedNotifications) {
+        for (PlannedNotificationBuilder plannedNotification : plannedNotifications) {
+            actionPlan.add(plannedNotification.build());
+        }
         return this;
     }
     

@@ -85,34 +85,4 @@ public class GenericEmailReaction implements EmailReaction {
 	public void setTemplateType(String templateType) {
 		this.templateType = templateType;
 	}
-
-    public String getDestination() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public URI getNotifierUid() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getTemplate() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getDescription() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getName() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public URI getUid() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

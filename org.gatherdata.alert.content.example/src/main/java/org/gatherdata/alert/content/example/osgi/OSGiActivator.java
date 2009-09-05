@@ -3,6 +3,7 @@ package org.gatherdata.alert.content.example.osgi;
 import static com.google.inject.Guice.createInjector;
 import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
+import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
 import static org.ops4j.peaberry.Peaberry.osgiModule;
 
@@ -42,7 +43,12 @@ public final class OSGiActivator implements BundleActivator {
                 .applyingRules(
                         rules("text/xml")
                             .rule(expressedIn("js").script("/bar/.test(body)"))
-                ).build());
+                    )
+                .notifying(
+                        address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message")),
+                        address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
+                    )
+                .build());
 
     }
 

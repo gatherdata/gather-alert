@@ -2,6 +2,7 @@ package org.gatherdata.alert.dao.pojo.internal;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,9 +64,8 @@ public class ExampleAlertServiceDao implements AlertServiceDao {
         return uriToActionPlanMap.containsKey(uidOfActionPlan);
     }
 
-    public ActionPlan get(URI arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public ActionPlan get(URI uidOfActionPlan) {
+    	return uriToActionPlanMap.get(uidOfActionPlan);
     }
 
     public Iterable<ActionPlan> getAll() {
@@ -96,8 +96,11 @@ public class ExampleAlertServiceDao implements AlertServiceDao {
     }
 
     public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
-        // TODO Auto-generated method stub
-        return null;
+    	List<PlannedNotification> notificationList = eventToNotificationMap.get(eventType.getUid());
+        if (notificationList == null) {
+        	notificationList = Collections.emptyList();
+        }
+        return notificationList;
     }
 
 }

@@ -16,12 +16,14 @@
     </feature>
 
     <feature name="gather-alert.velocity" version="${velocity.version}">
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/${antlr.version}</bundle>
         <bundle>mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.oro/${oro.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.ant/${ant.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jdom/${jdom.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.werken-xpath/${werken-xpath.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.velocity/${velocity.version}</bundle>
+        <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.render.velocity/${gather-alert.version}</bundle>
     </feature>
 
 </features>

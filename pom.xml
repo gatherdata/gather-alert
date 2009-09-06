@@ -26,11 +26,12 @@
     <commons-codec.version>1.2_1</commons-codec.version>
     <commons-lang.version>2.4</commons-lang.version>
     <commons-collections.version>3.2.1</commons-collections.version>
+    <commons-email.version>1.1_1</commons-email.version>
     <junit.version>4.5</junit.version>
     <hamcrest.version>1.1</hamcrest.version>
     <easymock.version>2.3.0</easymock.version>
     <pax-logging.version>1.3.0</pax-logging.version>
-    <geronimo-javamail.version>1.6_1</geronimo-javamail.version>
+    <javax-mail.version>1.4.1_1-SNAPSHOT</javax-mail.version>
     <joda-time.version>1.5.2_1</joda-time.version>
     <apache-bsf.version>3.0-beta2</apache-bsf.version>
     <groovy.version>1.7-beta-1</groovy.version>
@@ -74,11 +75,6 @@
     <module>poms</module>
     <module>org.gatherdata.alert.core</module>
     <module>org.gatherdata.alert.command</module>
-    <module>org.gatherdata.alert.reaction.email</module>
-    <module>org.gatherdata.alert.reaction.sms</module>
-    <module>org.gatherdata.alert.reaction.twitter</module>
-    <module>org.gatherdata.alert.predicate.groovy</module>
-    <module>org.gatherdata.alert.predicate.jpa</module>
     <module>org.apache.commons.email</module>
     <module>org.gatherdata.alert.features</module>
     <module>org.gatherdata.alert.dao.pojo</module>
@@ -88,6 +84,8 @@
     <module>org.gatherdata.alert.render.st</module>
     <module>org.gatherdata.alert.render.velocity</module>
     <module>org.antlr.stringtemplate</module>
+    <module>org.gatherdata.alert.notify.mail</module>
+    <module>javax.mail</module>
   </modules>
 
   <build>
@@ -102,7 +100,7 @@
           <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
           <noDependencies>true</noDependencies>
           <provision>
-            <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages,gather-alert.st,gather-alert.velocity</param>
+            <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages,gather-alert.st,gather-alert.velocity,gather-alert.mail</param>
             <param>scan-features:mvn:org.gatherdata.gather-commons/org.gatherdata.commons.features/${gather-commons.version}/xml/features!/gather-core</param>
           </provision>
         </configuration>

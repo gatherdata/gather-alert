@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <parent>
     <relativePath>../poms/wrappers/</relativePath>
@@ -9,16 +9,16 @@
   </parent>
 
   <properties>
-    <bundle.symbolicName>org.apache.commons.email</bundle.symbolicName>
-    <wrapped.groupId>org.apache.commons</wrapped.groupId>
-    <wrapped.artifactId>commons-email</wrapped.artifactId>
-    <wrapped.version>1.1</wrapped.version>
+    <bundle.symbolicName>javax.mail</bundle.symbolicName>
+    <wrapped.groupId>javax.mail</wrapped.groupId>
+    <wrapped.artifactId>mail</wrapped.artifactId>
+    <wrapped.version>1.4.1</wrapped.version>
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gatherdata.gather-alert</groupId>
-  <artifactId>org.apache.commons.email</artifactId>
-  <version>1.1_1</version>
+  <artifactId>javax.mail</artifactId>
+  <version>${javax-mail.version}</version>
 
   <name>${bundle.symbolicName} ${wrapped.version} [osgi]</name>
 

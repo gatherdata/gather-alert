@@ -140,9 +140,14 @@
               <optional>true</optional>
           </dependency>
           <dependency>
-              <groupId>org.apache.servicemix.bundles</groupId>
-              <artifactId>org.apache.servicemix.bundles.geronimo-javamail_1.4_provider</artifactId>
-              <version>${geronimo-javamail.version}</version>
+              <groupId>org.gatherdata.gather-alert</groupId>
+              <artifactId>javax.mail</artifactId>
+              <version>${javax-mail.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.gatherdata.gather-alert</groupId>
+              <artifactId>org.apache.commons.email</artifactId>
+              <version>${commons-email.version}</version>
           </dependency>
           <dependency>
               <groupId>org.apache.servicemix.bundles</groupId>

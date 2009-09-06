@@ -2,7 +2,7 @@ package org.gatherdata.alert.core.model;
 
 import java.net.URI;
 
-public class MutableNotification {
+public class MutableNotification implements Notification {
     private URI destination;
 	private String message;
 
@@ -15,6 +15,9 @@ public class MutableNotification {
 		setMessage(message);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.gatherdata.alert.core.model.Notification#getDestination()
+	 */
 	public URI getDestination() {
     	return this.destination;
     }
@@ -23,6 +26,9 @@ public class MutableNotification {
     	this.destination = destination;
     }
     
+    /* (non-Javadoc)
+	 * @see org.gatherdata.alert.core.model.Notification#getMessage()
+	 */
     public String getMessage() {
     	return this.message;
     }

@@ -26,4 +26,11 @@
         <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.render.velocity/${gather-alert.version}</bundle>
     </feature>
 
+
+    <feature name="gather-alert.mail" version="${gather-alert.version}">
+        <bundle>mvn:org.gatherdata.gather-alert/org.apache.commons.email/${commons-email.version}</bundle>
+        <bundle>mvn:org.gatherdata.gather-alert/javax.mail/${javax-mail.version}</bundle>
+        <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.notify.mail/${gather-alert.version}</bundle>
+    </feature>
+
 </features>

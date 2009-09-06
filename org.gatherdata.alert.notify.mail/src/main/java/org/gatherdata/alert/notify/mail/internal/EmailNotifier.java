@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +18,23 @@ import org.apache.commons.mail.SimpleEmail;
 import org.gatherdata.alert.core.model.MutableSentNotice;
 import org.gatherdata.alert.core.model.Notification;
 import org.gatherdata.alert.core.spi.Notifier;
+import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.cm.ManagedService;
 
 public class EmailNotifier implements Notifier {
-	
+	 
 	private static Log log = LogFactory.getLog(EmailNotifier.class);
 
     public static final Collection<String> SCHEME_TYPES = Arrays.asList("mailto");
+
+	public static final String SERVICE_PID = "org.gatherdata.alert.notify.EmailNotifier";
+
+	private static final String DEFAULT_SMTP_PORT = "25";
+
+	private static final String DEFAULT_SMTP_HOST = "localhost";
+
+	private static final String NO_AUTHENTICATION = "no-authentication";
     
-	private String smtpHostName = "localhost";
-	private int smtpPort = 25;
 	private InternetAddress senderAddress;
 
 	public EmailNotifier() {
@@ -61,8 +70,8 @@ public class EmailNotifier implements Notifier {
 
 	public void sendEmail(Iterable<InternetAddress> toAddresses, Map<String, String> headers, String body) {		
 		SimpleEmail email = new SimpleEmail();
-		email.setHostName(smtpHostName);
-		email.setSmtpPort(smtpPort);
+		
+		configure(email);
 		
 		try {
 			for (InternetAddress addy : toAddresses) {
@@ -82,8 +91,22 @@ public class EmailNotifier implements Notifier {
 		}
 	}
 
-	public void setSmtpPort(int smtpPort) {
-		this.smtpPort = smtpPort;
+	private void configure(SimpleEmail email) {
+		int smtpPort = Integer.parseInt(System.getProperty("mail.smtp.port", DEFAULT_SMTP_PORT));
+		String smtpHost = System.getProperty("mail.smtp.host", DEFAULT_SMTP_HOST);
+		
+		email.setHostName(smtpHost);
+		email.setSmtpPort(smtpPort);
+		
+		String mailUser = System.getProperty("mail.user", NO_AUTHENTICATION);
+		
+		if (!NO_AUTHENTICATION.equals(mailUser)) {
+			String mailPassword = System.getProperty("mail.password", NO_AUTHENTICATION);
+			if (!NO_AUTHENTICATION.equals(mailPassword)) {
+				email.setAuthentication(mailUser, mailPassword);
+			}
+		}
+		
 	}
 
 }

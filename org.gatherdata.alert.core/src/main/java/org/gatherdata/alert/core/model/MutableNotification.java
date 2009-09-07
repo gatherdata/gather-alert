@@ -37,4 +37,10 @@ public class MutableNotification implements Notification {
     	this.message = message;
     }
 
+    @Override
+    public String toString() {
+        return "destination: " + destination + "\nmessage:\n" + message;
+    }
+
+    
 }

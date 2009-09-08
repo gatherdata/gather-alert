@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.MutableDetectableEventType;
+import org.joda.time.DateTime;
 
 public class MockDetectableEventFactory {
 
@@ -23,6 +24,7 @@ public class MockDetectableEventFactory {
         mock.setUid(eventUid);
         mock.setName("mockEvent");
         mock.setDescription("a mocked-up detectable event type");
+        mock.setDateCreated(new DateTime());
         
         return mock;
     }

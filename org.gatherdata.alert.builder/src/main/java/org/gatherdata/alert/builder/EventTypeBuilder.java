@@ -7,6 +7,7 @@ import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.MutableDetectableEventType;
 import org.gatherdata.commons.net.CbidFactory;
+import org.joda.time.DateTime;
 
 public class EventTypeBuilder implements FluentBuilder<DetectableEventType> {
 
@@ -33,6 +34,9 @@ public class EventTypeBuilder implements FluentBuilder<DetectableEventType> {
         }
         if (eventType.getUid() == null) {
             eventType.setUid(CbidFactory.createCbid(eventType.getName() + eventType.getDescription()));
+        }
+        if (eventType.getDateCreated() == null) {
+            eventType.setDateCreated(new DateTime());
         }
         return eventType;
     }

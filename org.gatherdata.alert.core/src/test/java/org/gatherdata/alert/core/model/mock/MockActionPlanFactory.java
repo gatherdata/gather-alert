@@ -10,6 +10,7 @@ import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.MutableActionPlan;
 import org.gatherdata.alert.core.model.MutableDetectableEventType;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.joda.time.DateTime;
 
 public class MockActionPlanFactory {
 
@@ -27,6 +28,7 @@ public class MockActionPlanFactory {
         
         mock.setUid(planUid);
         mock.setName("mockPlan");
+        mock.setDateCreated(new DateTime());
         mock.setDescription("a mocked-up ActionPlan");
         DetectableEventType mockEventType = MockDetectableEventFactory.create();
         mock.setEventType(mockEventType);

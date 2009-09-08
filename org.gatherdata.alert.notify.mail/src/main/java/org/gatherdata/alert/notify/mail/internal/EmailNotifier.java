@@ -100,7 +100,7 @@ public class EmailNotifier implements Notifier {
 		
 		String mailUser = System.getProperty("mail.user", NO_AUTHENTICATION);
 		
-		if (!NO_AUTHENTICATION.equals(mailUser)) {
+		if (!NO_AUTHENTICATION.equals(mailUser) && !"".equals(mailUser)) {
 			String mailPassword = System.getProperty("mail.password", NO_AUTHENTICATION);
 			if (!NO_AUTHENTICATION.equals(mailPassword)) {
 				email.setAuthentication(mailUser, mailPassword);

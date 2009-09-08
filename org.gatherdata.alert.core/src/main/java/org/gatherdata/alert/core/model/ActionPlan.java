@@ -9,5 +9,5 @@ public interface ActionPlan extends DescribedEntity {
     public RuleSet getRuleSet();
     
     public Iterable<PlannedNotification> getNotifications();
-    
+
 }

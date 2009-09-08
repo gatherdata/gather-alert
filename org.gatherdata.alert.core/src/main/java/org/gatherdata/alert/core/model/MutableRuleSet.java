@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Vector;
 
 import org.gatherdata.commons.model.MutableDescribedEntity;
+import org.gatherdata.commons.model.MutableEntity;
 
-public class MutableRuleSet extends MutableDescribedEntity implements RuleSet {
+public class MutableRuleSet extends MutableEntity implements RuleSet {
 
     private String context;
     private DetectableEventType indicatedEventType;

@@ -2,9 +2,9 @@ package org.gatherdata.alert.core.model;
 
 import java.net.URI;
 
-import org.gatherdata.commons.model.DescribedEntity;
+import org.gatherdata.commons.model.UniqueEntity;
 
-public interface RuleSet extends DescribedEntity {
+public interface RuleSet extends UniqueEntity {
     
     /**
      * Returns whether this ruleset is currently active. 

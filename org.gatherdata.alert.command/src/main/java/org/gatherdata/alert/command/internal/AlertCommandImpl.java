@@ -13,6 +13,7 @@ import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
 import org.gatherdata.alert.core.spi.TemplateRenderer;
+import org.gatherdata.alert.core.util.ActionPlanFormatter;
 
 import com.google.inject.Inject;
 
@@ -74,7 +75,7 @@ public class AlertCommandImpl implements Command {
                 Iterable<ActionPlan> plans = alertService.getAll();
                 if (plans != null) {
                     for (ActionPlan plan : alertService.getAll()) {
-                        out.println(plan);
+                        out.println(ActionPlanFormatter.toString(plan));
                     }
                 } else {
                     err.println("AlertService.getAll() returned null. Current AlertServiceDao is probably broken.");    

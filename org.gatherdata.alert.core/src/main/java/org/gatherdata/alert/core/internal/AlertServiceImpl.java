@@ -38,7 +38,10 @@ public class AlertServiceImpl implements AlertService {
     }
 
     public Iterable<ActionPlan> getAll() {
-        return dao.getAll();
+        dao.beginTransaction();
+        Iterable<ActionPlan> all = dao.getAll();
+        dao.endTransaction();
+        return all;
     }
 
     public void remove(URI uidOfActionPlan) {

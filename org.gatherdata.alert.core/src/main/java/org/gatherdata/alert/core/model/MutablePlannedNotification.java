@@ -14,6 +14,7 @@ public class MutablePlannedNotification extends MutableDescribedEntity implement
     
     private URI destination;
     private LanguageScript template;
+    private DetectableEventType eventType;
 
     public URI getDestination() {
         return this.destination;
@@ -31,4 +32,11 @@ public class MutablePlannedNotification extends MutableDescribedEntity implement
         this.template = template;
     }
 
+    public DetectableEventType getEventType() {
+        return this.eventType;
+    }
+    
+    public void setEventType(DetectableEventType eventType) {
+        this.eventType = eventType;
+    }
 }

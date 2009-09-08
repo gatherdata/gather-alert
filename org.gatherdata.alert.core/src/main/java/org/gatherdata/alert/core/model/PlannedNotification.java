@@ -15,4 +15,6 @@ public interface PlannedNotification extends DescribedEntity {
     
     public LanguageScript getTemplate();
     
+    public DetectableEventType getEventType();
+    
 }

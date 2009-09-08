@@ -27,9 +27,7 @@ public class MockRuleSetFactory {
         
         mock.setActive(true);
         mock.setContext(inDetectionContext);
-        mock.setDescription("an example (hard-coded) rule-set");
         mock.setIndicatedEventType(forEvent);
-        mock.setName("example");
         mock.setSatisfyAll(true);
         try {
             mock.setUid(new URI("example:" + rnd.nextLong()));

@@ -3,6 +3,7 @@ package org.gatherdata.alert.builder;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.MutableActionPlan;
 import org.gatherdata.commons.net.CbidFactory;
+import org.joda.time.DateTime;
 
 public class ActionPlanBuilder implements FluentBuilder<ActionPlan> {
 
@@ -31,6 +32,9 @@ public class ActionPlanBuilder implements FluentBuilder<ActionPlan> {
         if (actionPlan.getUid() == null) {
             actionPlan.setUid(CbidFactory.createCbid(actionPlan.getEventType().toString() + actionPlan.getName()
                     + actionPlan.getDescription()));
+        }
+        if (actionPlan.getDateCreated() == null) {
+            actionPlan.setDateCreated(new DateTime());
         }
         return actionPlan;
     }

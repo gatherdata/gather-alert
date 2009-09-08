@@ -31,10 +31,6 @@ public final class OSGiActivator implements BundleActivator {
     public void start(BundleContext bc) throws Exception {
         createInjector(osgiModule(bc), new GuiceBindingModule()).injectMembers(this);
 
-        System.out.println("Adding mock data to: " + alertService);
-        for (int i = 0; i < 1; i++) {
-            alertService.save(MockActionPlanFactory.create());
-        }
         alertService.save(ActionPlanBuilder.plan()
                 .named("example1")
                 .describedAs("an example test plan")

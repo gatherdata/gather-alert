@@ -4,8 +4,6 @@ import org.gatherdata.commons.model.UniqueEntity;
 import org.joda.time.DateTime;
 
 public interface SentNotice extends UniqueEntity {
-
-    public DateTime getDateSent();
     
     public DetectedEvent getDetectedEvent();
     

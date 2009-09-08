@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gatherdata.alert.core.util.ActionPlanFormatter;
 import org.gatherdata.commons.model.MutableDescribedEntity;
 
 public class MutableActionPlan extends MutableDescribedEntity implements ActionPlan {
@@ -43,7 +44,7 @@ public class MutableActionPlan extends MutableDescribedEntity implements ActionP
 
     @Override
     public String toString() {
-        return "ActionPlan [eventType=" + eventType + "]";
+        return "ActionPlan [eventType = " + getEventType() + "]";
     }
 
     

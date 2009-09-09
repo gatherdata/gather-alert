@@ -34,10 +34,15 @@
         <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.notify.mail/${gather-alert.version}</bundle>
     </feature>
 
+    <feature name="gather-alert.pojo" version="${gather-alert.version}">
+        <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}</bundle>
+    </feature>
+
     <feature name="gather-alert.all" version="${gather-alert.version}">
         <feature>gather-alert.core</feature>
         <feature>gather-alert.velocity</feature>
         <feature>gather-alert.mail</feature>
+        <feature>gather-alert.pojo</feature>
     </feature>
 
 </features>

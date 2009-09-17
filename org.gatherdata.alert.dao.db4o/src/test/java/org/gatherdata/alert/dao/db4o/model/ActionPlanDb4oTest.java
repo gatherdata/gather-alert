@@ -1,5 +1,9 @@
 package org.gatherdata.alert.dao.db4o.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.gatherdata.alert.builder.ActionPlanBuilder;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.MutableActionPlan;
 import org.junit.Test;
@@ -10,20 +14,68 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import static org.gatherdata.alert.builder.EventTypeBuilder.event;
+import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
+import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
+import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
+import static org.gatherdata.commons.junit.ContainsAll.containsAll;
+
 public class ActionPlanDb4oTest {
 
+	private static int mock = 0;
+	
+    private ActionPlan createMock() {
+    	mock++;
+    	return ActionPlanBuilder.plan()
+		.named("example" + mock)
+		.describedAs("an example test plan " + mock)
+		.lookingFor(
+            event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
+            .applyingRules(
+            		rules("text/xml")
+            			.rule(expressedIn("js").script("/bar/.test(body)"))
+            )
+            .notifying(
+            		address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message")),
+            		address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
+            )
+            .build();	
+    }
+
     @Test
-    public void shouldEqualOriginalWhenDerived() {
+    public void shouldEqualEmptyOriginal() {
         ActionPlan originalEntity = new MutableActionPlan();
         
         ActionPlan derivedEntity = new ActionPlanDb4o().copy(originalEntity);
         
         assertThat(derivedEntity, is(originalEntity));
+    }
+    
+    @Test
+    public void shouldEqualFullyQualifiedOriginal() {
+    	ActionPlan originalEntity = createMock();
+    	
+        ActionPlan derivedEntity = new ActionPlanDb4o().copy(originalEntity);
+        
+        assertThat(derivedEntity, is(originalEntity));
+    }
+
+	@Test
+    public void shouldMatchInContainers() {
+    	List<ActionPlan> originals = new ArrayList<ActionPlan>();
+    	List<ActionPlan> deriveds = new ArrayList<ActionPlan>();
+    	for (int i=0; i<10; i++) {
+    		ActionPlan original = createMock();
+    		originals.add(original);
+    		deriveds.add(new ActionPlanDb4o().copy(original));
+    	}
+    	
+    	assertThat(deriveds, containsAll(originals));
     }
 }

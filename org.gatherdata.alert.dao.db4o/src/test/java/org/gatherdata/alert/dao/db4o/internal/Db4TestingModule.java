@@ -38,7 +38,7 @@ public class Db4TestingModule extends AbstractModule {
     
     public static final String DEFAULT_DATA_DIR = "target" + File.separatorChar + "db4o";
 
-    private static final int OBJECT_DEPTH = 3;
+    private static final int OBJECT_DEPTH = 5;
     
     @Override 
     protected void configure() {
@@ -51,8 +51,6 @@ public class Db4TestingModule extends AbstractModule {
         EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();
         config.common().activationDepth(OBJECT_DEPTH);
         config.common().updateDepth(OBJECT_DEPTH);
-        config.common().
-        
 
         ObjectContainer testObjectContainer = Db4oEmbedded.openFile(config,
                 DATABASE_FILE);

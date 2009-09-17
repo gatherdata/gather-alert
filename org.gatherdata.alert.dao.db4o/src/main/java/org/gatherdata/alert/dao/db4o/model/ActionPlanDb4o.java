@@ -73,6 +73,10 @@ public class ActionPlanDb4o extends DescribedEntityDb4o implements ActionPlan {
             if (templateRuleSet != null) {
                setRuleSet(new RuleSetDb4o().copy(templateRuleSet));
             }
+            DetectableEventType templateEventType = template.getEventType();
+            if (templateEventType != null) {
+            	setEventType((DetectableEventTypeDb4o) new DetectableEventTypeDb4o().copy(templateEventType));
+            }
         }
         return this;
     }

@@ -5,6 +5,14 @@ import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
 
+import static org.gatherdata.commons.junit.ContainsAll.containsAll;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.gatherdata.alert.builder.ActionPlanBuilder;
@@ -13,6 +21,7 @@ import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.dao.db4o.internal.AlertServiceDaoDb4o;
 import org.gatherdata.commons.spi.BaseStorageDaoTest;
 import org.junit.After;
+import org.junit.Test;
 
 import com.db4o.ObjectContainer;
 import com.google.inject.Guice;
@@ -52,25 +61,44 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
     @Override
     protected void endTransaction() {
         // TODO Auto-generated method stub
-        
+        db4o.commit();
     }
 
     @Override
     protected ActionPlan createMockEntity() {
         ActionPlan mockEntity = ActionPlanBuilder.plan()
-        .named("mock" + rnd.nextInt(1000))
-        .describedAs("an example test plan")
-    .lookingFor(
-            event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
-    .applyingRules(
-            rules("text/xml")
-                .rule(expressedIn("js").script("/bar/.test(body)"))
-        )
-    .notifying(
-            address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
-        )
-    .build();
-    return mockEntity;
+        	.named("mock" + rnd.nextInt(1000))
+        	.describedAs("an example test plan")
+        	.lookingFor(
+        			event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
+        			.applyingRules(
+        					rules("text/xml")
+        					.rule(expressedIn("js").script("/bar/.test(body)"))
+        			)
+        			.notifying(
+        					address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
+        			)
+        			.build();
+        return mockEntity;
+    }
+
+    @Test
+    public void shouldGetAllSavedEntitiesExplicitCheck() {
+        final int EXPECTED_NUMBER_OF_ENTITIES = new Random().nextInt(100);
+        List<ActionPlan> entitiesToSave = new ArrayList<ActionPlan>();
+        
+        for (int i=0; i< EXPECTED_NUMBER_OF_ENTITIES; i++) {
+        	ActionPlan entityToSave = createMockEntity();
+            entitiesToSave.add(entityToSave);
+            dao.save(entityToSave);
+        }
+        
+        beginTransaction();
+        Iterable<ActionPlan> allEntitiesList = (Iterable<ActionPlan>) dao.getAll();
+        for (ActionPlan plan : allEntitiesList) {
+        	assertTrue(entitiesToSave.contains(plan));
+        }
+        endTransaction();
     }
 
 }

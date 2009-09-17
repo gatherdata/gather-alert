@@ -47,6 +47,7 @@ public class BsfEventDetector implements EventDetector {
 
         for (RuleSet rule : usingRules) {
             if (rule.isActive()) {
+                log.info("applying rule: " + rule);
                 boolean anyMatch = false;
                 boolean allMatch = true;
 
@@ -56,6 +57,8 @@ public class BsfEventDetector implements EventDetector {
                         try {
                             Boolean doesMatch = (Boolean) engine.eval(predicate.getScript(),
                                     adaptToScriptContext(attributes));
+
+                            log.info("\tpredicate [" + predicate + "] " + (doesMatch ? "matches" : "does not match"));
                             anyMatch |= doesMatch;
                             allMatch &= doesMatch;
 
@@ -71,7 +74,10 @@ public class BsfEventDetector implements EventDetector {
                     detectedEvents.add(MutableDetectedEvent.createFor(detectionTime, CbidFactory.createCbid(attributes
                             .get("body").toString()), rule));
                 }
+            } else {
+                log.warn("Skipping inactive rule:" + rule);
             }
+            
         }
         return detectedEvents;
     }

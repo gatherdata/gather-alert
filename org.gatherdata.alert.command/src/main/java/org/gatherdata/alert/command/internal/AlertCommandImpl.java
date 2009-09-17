@@ -9,11 +9,13 @@ import java.util.regex.Pattern;
 import org.apache.felix.shell.Command;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectedEvent;
+import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
 import org.gatherdata.alert.core.spi.TemplateRenderer;
 import org.gatherdata.alert.core.util.ActionPlanFormatter;
+import org.gatherdata.alert.core.util.RuleSetFormatter;
 
 import com.google.inject.Inject;
 
@@ -47,7 +49,7 @@ public class AlertCommandImpl implements Command {
 
             if ("help".equals(subCommand)) {
                 out.println("subcommands: list, detect, render");
-                out.println("\tlist - show alert action plans");
+                out.println("\tlist [category] - show alert action plans [or other categories]");
                 out.println("\tdetect <rule context> <sample data> - apply rules to sample data");
                 out.println("\trender <template type> <template body> - render body");
             } else if ("detect".equals(subCommand)) {
@@ -77,13 +79,20 @@ public class AlertCommandImpl implements Command {
                     err.println("Detect what with who, now? I'm confused by: " + subArguments);
                 }
             } else if ("list".equals(subCommand)) {
+                Matcher listArguments = subCommandPattern.matcher(subArguments);
                 Iterable<ActionPlan> plans = (Iterable<ActionPlan>) alertService.getAll();
                 if (plans != null) {
                     for (ActionPlan plan : alertService.getAll()) {
                         out.println(ActionPlanFormatter.toString(plan));
+                        RuleSet planRules = plan.getRuleSet();
+                        if (planRules != null) {
+                            out.println(RuleSetFormatter.toLongString(planRules));
+                        } else {
+                            out.println("\tplan has no defined RuleSet");
+                        }
                     }
                 } else {
-                    err.println("AlertService.getAll() returned null. Current AlertServiceDao is probably broken.");    
+                    err.println("AlertService.getAll() returned null. Current AlertServiceDao is probably broken.");
                 }
              
             } else if ("render".equals(subCommand)) { 

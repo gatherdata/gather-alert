@@ -1,6 +1,7 @@
 package org.gatherdata.alert.dao.db4o.model;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
@@ -13,7 +14,7 @@ public class RuleSetDb4o extends UniqueEntityDb4o implements RuleSet {
 
     private String context;
     private DetectableEventTypeDb4o indicatedEvent;
-    private List<LanguageScriptDb4o> predicates;
+    private List<LanguageScriptDb4o> predicates = new ArrayList<LanguageScriptDb4o>();
     private boolean isActive;
     private boolean isSatifsyAll;
 
@@ -35,6 +36,12 @@ public class RuleSetDb4o extends UniqueEntityDb4o implements RuleSet {
 
     public int getPredicateCount() {
         return predicates.size();
+    }
+
+    public void addAll(Iterable<? extends LanguageScript> predicates) {
+        for (LanguageScript predicate : predicates) {
+            this.predicates.add(new LanguageScriptDb4o().copy(predicate));
+        }
     }
 
     public Iterable<? extends LanguageScript> getPredicates() {
@@ -64,6 +71,7 @@ public class RuleSetDb4o extends UniqueEntityDb4o implements RuleSet {
             setIndicatedEventType((DetectableEventTypeDb4o) new DetectableEventTypeDb4o().copy(template.getIndicatedEventType()));
             setIsActive(template.isActive());
             setIsSatisfyAll(template.isSatisfyAll());
+            addAll(template.getPredicates());
         }
         return this;
     }

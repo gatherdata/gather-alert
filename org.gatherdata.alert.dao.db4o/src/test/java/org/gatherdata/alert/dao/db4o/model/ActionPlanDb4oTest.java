@@ -47,6 +47,13 @@ public class ActionPlanDb4oTest {
             )
             .build();	
     }
+    
+    public void shouldConsiderAllNonSavedObjectInstanceAsUnique() {
+        final int EXPECTED_ENTITIES = 100;
+        for (int i=0; i<100; i++) {
+            createMock();
+        }
+    }
 
     @Test
     public void shouldEqualEmptyOriginal() {

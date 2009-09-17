@@ -16,6 +16,7 @@ import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.dao.db4o.model.ActionPlanDb4o;
+import org.gatherdata.alert.dao.db4o.model.RuleSetDb4o;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -29,35 +30,14 @@ public class AlertServiceDaoDb4o implements AlertServiceDao {
     @Inject
     ObjectContainer db4o;
 
-    Map<String, List<RuleSet>> contextToRuleSetMap = new HashMap<String, List<RuleSet>>();
-
-    Map<URI, List<PlannedNotification>> eventToNotificationMap = new HashMap<URI, List<PlannedNotification>>();
-
     public AlertServiceDaoDb4o() {
         ;
     }
 
-    public void save(RuleSet ruleSetToSave) {
-        String context = ruleSetToSave.getContext();
-        List<RuleSet> rulesetList = contextToRuleSetMap.get(context);
-        if (rulesetList == null) {
-            rulesetList = new ArrayList<RuleSet>();
-            contextToRuleSetMap.put(context, rulesetList);
-        }
-        rulesetList.add(ruleSetToSave);
-    }
-
     public Iterable<RuleSet> getActiveRulesetsFor(String context) {
-        List<RuleSet> possibleRules = contextToRuleSetMap.get(context);
-        List<RuleSet> activeRules = new ArrayList<RuleSet>();
-        if (possibleRules != null) {
-            for (RuleSet possibleRule : possibleRules) {
-                if (possibleRule.isActive()) {
-                    activeRules.add(possibleRule);
-                }
-            }
-        }
-        return activeRules;
+        RuleSetDb4o proto = new RuleSetDb4o();
+        proto.setIsActive(true);
+        return db4o.queryByExample(proto);
     }
 
     public void beginTransaction() {
@@ -95,6 +75,10 @@ public class AlertServiceDaoDb4o implements AlertServiceDao {
     public Iterable<? extends ActionPlan> getAll() {
         return db4o.query(ActionPlanDb4o.class);
     }
+    
+    public int getCount() {
+        return db4o.query(ActionPlanDb4o.class).size();
+    }
 
     public void remove(URI uid) {
         db4o.delete(get(uid));
@@ -111,21 +95,17 @@ public class AlertServiceDaoDb4o implements AlertServiceDao {
         return get(entityToSave.getUid());
     }
 
-    public void save(DetectableEventType eventType, PlannedNotification notification) {
-        List<PlannedNotification> notificationList = eventToNotificationMap.get(eventType.getUid());
-        if (notificationList == null) {
-            notificationList = new ArrayList<PlannedNotification>();
-            eventToNotificationMap.put(eventType.getUid(), notificationList);
-        }
-        notificationList.add(notification);
-    }
-
     public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
-    	List<PlannedNotification> notificationList = eventToNotificationMap.get(eventType.getUid());
-        if (notificationList == null) {
-        	notificationList = Collections.emptyList();
-        }
-        return notificationList;
+        final DetectableEventType requestedEventType = eventType;
+        List<PlannedNotification> notifications = db4o.query(new Predicate<PlannedNotification>() {
+
+            @Override
+            public boolean match(PlannedNotification possibleMatch) {
+                return requestedEventType.equals(possibleMatch.getEventType());
+            }
+            
+        });
+        return notifications;
     }
 
 }

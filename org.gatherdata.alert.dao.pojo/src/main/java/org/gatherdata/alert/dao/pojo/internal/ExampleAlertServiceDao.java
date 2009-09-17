@@ -71,6 +71,10 @@ public class ExampleAlertServiceDao implements AlertServiceDao {
     public Iterable<ActionPlan> getAll() {
         return uriToActionPlanMap.values();
     }
+    
+    public int getCount() {
+        return uriToActionPlanMap.values().size();
+    }
 
     public void remove(URI arg0) {
         // TODO Auto-generated method stub

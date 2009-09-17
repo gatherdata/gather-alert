@@ -23,6 +23,7 @@ import org.gatherdata.commons.model.neo4j.UniqueNodeWrapper;
 import org.neo4j.api.core.Node;
 import org.neo4j.api.core.NotFoundException;
 import org.neo4j.api.core.Transaction;
+import org.neo4j.util.index.LuceneIndexService;
 
 import com.google.inject.Inject;
 
@@ -89,6 +90,18 @@ public class NeoAlertServiceDao implements AlertServiceDao {
                 ActionPlanWrapper.GATHER_NODETYPE);
 
         return new IterableNodeWrapper(neo.neo(), allNodes, actionPlanAdapter);
+    }
+    
+    public int getCount() {
+        int count = 0;
+        beginTransaction();
+        Iterable<Node> allNodes = neo.indexService().getNodes(GatherNodeWrapper.GATHER_NODETYPE_PROPERTY,
+                ActionPlanWrapper.GATHER_NODETYPE);
+        for (Node n : allNodes) {
+            count++;
+        }
+        endTransaction();
+        return count;
     }
 
     public void remove(URI uidOfActionPlan) {

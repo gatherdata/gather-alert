@@ -36,7 +36,7 @@ public class AlertDaoModule extends AbstractModule {
     
     public static final String DEFAULT_DATA_DIR = "alert" + File.separatorChar + "db4o";
 
-    private static final int OBJECT_DEPTH = 3;
+    private static final int OBJECT_DEPTH = Integer.MAX_VALUE;
 
     @Inject
     Db4oService db4oService;

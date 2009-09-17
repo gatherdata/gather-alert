@@ -39,7 +39,7 @@ public class AlertServiceImpl implements AlertService {
 
     public Iterable<ActionPlan> getAll() {
         dao.beginTransaction();
-        Iterable<ActionPlan> all = dao.getAll();
+        Iterable<ActionPlan> all = (Iterable<ActionPlan>) dao.getAll();
         dao.endTransaction();
         return all;
     }

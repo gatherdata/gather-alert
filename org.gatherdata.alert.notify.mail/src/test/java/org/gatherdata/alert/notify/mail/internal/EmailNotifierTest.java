@@ -31,7 +31,7 @@ import com.dumbster.smtp.SmtpMessage;
 public class EmailNotifierTest {
 	
 	@SuppressWarnings("unchecked")
-    @Test
+    @Test(timeout=10000)
 	public void shouldBeAbleToSendPlainEmail() throws MalformedURLException, URISyntaxException, UnsupportedEncodingException, AddressException {
 		final int MOCK_SMTP_PORT = 2525;
 		SimpleSmtpServer server = SimpleSmtpServer.start(MOCK_SMTP_PORT );
@@ -60,7 +60,7 @@ public class EmailNotifierTest {
 	}
 
 	@SuppressWarnings("unchecked")
-    @Test
+    @Test(timeout=10000)
 	public void shouldBeAbleToSendEmailForNotification() throws MalformedURLException, URISyntaxException, UnsupportedEncodingException, AddressException {
 		final int MOCK_SMTP_PORT = 2525;
 		SimpleSmtpServer server = SimpleSmtpServer.start(MOCK_SMTP_PORT );

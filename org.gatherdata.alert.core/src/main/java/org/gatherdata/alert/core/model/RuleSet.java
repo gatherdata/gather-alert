@@ -43,7 +43,7 @@ public interface RuleSet extends UniqueEntity {
      * Returns the predicates contained within this ruleset.
      * 
      */
-    public abstract Iterable<LanguageScript> getPredicates();
+    public abstract Iterable<? extends LanguageScript> getPredicates();
 
     public abstract int getPredicateCount();
     

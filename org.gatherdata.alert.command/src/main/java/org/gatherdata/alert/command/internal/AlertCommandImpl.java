@@ -45,7 +45,12 @@ public class AlertCommandImpl implements Command {
                 return;
             }
 
-            if ("detect".equals(subCommand)) {
+            if ("help".equals(subCommand)) {
+                out.println("subcommands: list, detect, render");
+                out.println("\tlist - show alert action plans");
+                out.println("\tdetect <rule context> <sample data> - apply rules to sample data");
+                out.println("\trender <template type> <template body> - render body");
+            } else if ("detect".equals(subCommand)) {
                 Matcher filterArguments = subCommandPattern.matcher(subArguments);
                 if (filterArguments.matches()) {
                     String rulesetContext = filterArguments.group(1);
@@ -72,7 +77,7 @@ public class AlertCommandImpl implements Command {
                     err.println("Detect what with who, now? I'm confused by: " + subArguments);
                 }
             } else if ("list".equals(subCommand)) {
-                Iterable<ActionPlan> plans = alertService.getAll();
+                Iterable<ActionPlan> plans = (Iterable<ActionPlan>) alertService.getAll();
                 if (plans != null) {
                     for (ActionPlan plan : alertService.getAll()) {
                         out.println(ActionPlanFormatter.toString(plan));

@@ -67,7 +67,7 @@ public class ActionPlanBuilderTest {
         assertThat(builtRuleSet.isActive(), is(true));
 
         assertThat(builtTestPlan.getNotifications(), notNullValue());
-        Iterable<PlannedNotification> builtNotifications = builtTestPlan.getNotifications();
+        Iterable<PlannedNotification> builtNotifications = (Iterable<PlannedNotification>) builtTestPlan.getNotifications();
         PlannedNotification firstNotification = builtNotifications.iterator().next();
         assertThat(firstNotification.getDestination(), is(TEST_ADDRESS_URI));
         assertThat(firstNotification.getTemplate().getLanguage(), is(MESSAGE_TEMPLATE_LANGUAGE));

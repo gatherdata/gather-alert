@@ -14,6 +14,8 @@ public class MutableActionPlan extends MutableDescribedEntity implements ActionP
      */
     private static final long serialVersionUID = 1052452988107447955L;
     
+    protected static final ActionPlanSupport support = new ActionPlanSupport();
+    
     private DetectableEventType eventType;
     private final List<PlannedNotification> plannedNotifications = new ArrayList<PlannedNotification>();
     private RuleSet ruleset;
@@ -47,5 +49,18 @@ public class MutableActionPlan extends MutableDescribedEntity implements ActionP
         return "ActionPlan [eventType = " + getEventType() + "]";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ActionPlan)) return false;
+        ActionPlan rhs = (ActionPlan)obj;
+        return support.equals(this, rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        return support.hashCode(this);
+    }
+
+    
     
 }

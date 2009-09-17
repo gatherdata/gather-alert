@@ -37,6 +37,10 @@
     <feature name="gather-alert.pojo" version="${gather-alert.version}">
         <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}</bundle>
     </feature>
+    
+    <feature name="gather-alert.db4o" version="${gather-alert.version}">
+        <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.db4o/${gather-alert.version}</bundle>
+    </feature>
 
     <feature name="gather-alert.all" version="${gather-alert.version}">
         <feature>gather-alert.core</feature>

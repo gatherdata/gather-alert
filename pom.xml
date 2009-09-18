@@ -79,85 +79,99 @@
   </repositories>
 
   <modules>
-    <module>poms</module>
-    <module>org.gatherdata.alert.core</module>
-    <module>org.gatherdata.alert.command</module>
-    <module>org.apache.commons.email</module>
-    <module>org.gatherdata.alert.features</module>
-    <module>org.gatherdata.alert.detect.bsf</module>
-    <module>org.gatherdata.alert.content.example</module>
-    <module>org.gatherdata.alert.builder</module>
-    <module>org.gatherdata.alert.render.st</module>
-    <module>org.gatherdata.alert.render.velocity</module>
-    <module>org.antlr.stringtemplate</module>
-    <module>org.gatherdata.alert.notify.mail</module>
-    <module>javax.mail</module>
-    <module>org.gatherdata.alert.dao.db4o</module>
+      <module>poms</module>
+      <module>org.gatherdata.alert.core</module>
+      <module>org.gatherdata.alert.command</module>
+      <module>org.apache.commons.email</module>
+      <module>org.gatherdata.alert.features</module>
+      <module>org.gatherdata.alert.detect.bsf</module>
+      <module>org.gatherdata.alert.content.example</module>
+      <module>org.gatherdata.alert.builder</module>
+      <module>org.gatherdata.alert.render.st</module>
+      <module>org.gatherdata.alert.render.velocity</module>
+      <module>org.antlr.stringtemplate</module>
+      <module>org.gatherdata.alert.notify.mail</module>
+      <module>javax.mail</module>
   </modules>
 
   <profiles>
-    <profile>
-      <id>pojo</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <modules>
-        <module>org.gatherdata.alert.dao.pojo</module>
-      </modules>
-      <properties>
-        <!-- redundant, but harmless and something has to go in these properties... -->
-        <dao.gather-dependencies>gather-core</dao.gather-dependencies>
-        <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}@2</dao.provision>
-        <dao.provision-dependencies>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}@2</dao.provision-dependencies>
-      </properties>
-    </profile>
-    <profile>
-      <id>db4o</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>org.gatherdata.alert.dao.db4o</module>
-      </modules>
-      <properties>
-        <dao.gather-dependencies>gather-commons.db4o</dao.gather-dependencies>
-        <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.db4o/${gather-alert.version}@3</dao.provision>
-        <dao.provision-dependencies>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.db4o/${gather-alert.version}@3</dao.provision-dependencies>
-      </properties>
-    </profile>
-    <profile>
-      <id>neo4j</id>
-      <modules>
-        <module>org.gatherdata.alert.dao.neo4j</module>
-      </modules>
-      <properties>
-        <dao.gather-dependencies>neo4j-service</dao.gather-dependencies>
-        <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.neo4j/${gather-alert.version}@2</dao.provision>
-        <dao.provision-dependencies>scan-features:mvn:org.neo4j.apoc-bundle/org.neo4j.neo.karaf/1.0-SNAPSHOT/xml/features!/neo4j-meta@2</dao.provision-dependencies>
-      </properties>
-    </profile>
+      <profile>
+          <id>pojo</id>
+          <activation>
+              <activeByDefault>false</activeByDefault>
+              <property>
+                  <name>build-all</name>
+                  <value>true</value>
+              </property>
+          </activation>
+          <modules>
+              <module>org.gatherdata.alert.dao.pojo</module>
+          </modules>
+          <properties>
+              <!-- redundant, but harmless and something has to go in these properties... -->
+              <dao.gather-dependencies>gather-core</dao.gather-dependencies>
+              <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}@2</dao.provision>
+              <dao.provision-dependencies>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}@2</dao.provision-dependencies>
+          </properties>
+      </profile>
+      <profile>
+          <id>db4o</id>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+              <property>
+                  <name>build-all</name>
+                  <value>true</value>
+              </property>
+          </activation>
+          <modules>
+              <module>org.gatherdata.alert.dao.db4o</module>
+          </modules>
+          <properties>
+              <dao.gather-dependencies>gather-commons.db4o</dao.gather-dependencies>
+              <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.db4o/${gather-alert.version}@3</dao.provision>
+              <dao.provision-dependencies>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.db4o/${gather-alert.version}@3</dao.provision-dependencies>
+          </properties>
+      </profile>
+      <profile>
+          <id>neo4j</id>
+          <activation>
+              <activeByDefault>false</activeByDefault>
+              <property>
+                  <name>build-all</name>
+                  <value>true</value>
+              </property>
+          </activation>
+          <modules>
+              <module>org.gatherdata.alert.dao.neo4j</module>
+          </modules>
+          <properties>
+              <dao.gather-dependencies>neo4j-service</dao.gather-dependencies>
+              <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.neo4j/${gather-alert.version}@2</dao.provision>
+              <dao.provision-dependencies>scan-features:mvn:org.neo4j.apoc-bundle/org.neo4j.neo.karaf/1.0-SNAPSHOT/xml/features!/neo4j-meta@2</dao.provision-dependencies>
+          </properties>
+      </profile>
   </profiles>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.ops4j</groupId>
-        <artifactId>maven-pax-plugin</artifactId>
-        <version>1.4</version>
-        <configuration>
-          <framework>felix</framework>
-          <profiles>log,web</profiles>
-          <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
-          <noDependencies>true</noDependencies>
-          <provision>
-            <param>${dao.provision-dependencies}</param>
-            <param>${dao.provision}</param>
-            <param>scan-features:mvn:org.gatherdata.gather-commons/org.gatherdata.commons.features/${gather-commons.version}/xml/features!/gather-core,${dao.gather-dependencies}@2</param>
-            <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages,gather-alert.st,gather-alert.velocity,gather-alert.mail@2</param>
-          </provision>
-        </configuration>
-      </plugin>
-    </plugins>
+      <plugins>
+          <plugin>
+              <groupId>org.ops4j</groupId>
+              <artifactId>maven-pax-plugin</artifactId>
+              <version>1.4</version>
+              <configuration>
+                  <framework>felix</framework>
+                  <profiles>log,web</profiles>
+                  <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
+                  <noDependencies>true</noDependencies>
+                  <provision>
+                      <param>${dao.provision-dependencies}</param>
+                      <param>${dao.provision}</param>
+                      <param>scan-features:mvn:org.gatherdata.gather-commons/org.gatherdata.commons.features/${gather-commons.version}/xml/features!/gather-core,${dao.gather-dependencies}@2</param>
+                      <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages,gather-alert.st,gather-alert.velocity,gather-alert.mail@2</param>
+                  </provision>
+              </configuration>
+          </plugin>
+      </plugins>
   </build>
 
 </project>

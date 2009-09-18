@@ -8,15 +8,18 @@
     </feature>
 
     <feature name="gather-alert.languages" version="${gather-alert.version}">
+        <feature>gather-alert.core</feature>
         <bundle>mvn:${codehaus.release.repository}!org.codehaus.groovy/groovy-all/${groovy.version}</bundle>
     </feature>
 
     <feature name="gather-alert.st" version="${stringtemplate.version}">
+        <feature>gather-alert.core</feature>
         <bundle>mvn:org.gatherdata.gather-alert/org.antlr.stringtemplate/${stringtemplate.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/${antlr.version}</bundle>
     </feature>
 
     <feature name="gather-alert.velocity" version="${velocity.version}">
+        <feature>gather-alert.core</feature>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/${antlr.version}</bundle>
         <bundle>mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.oro/${oro.version}</bundle>
@@ -29,24 +32,31 @@
 
 
     <feature name="gather-alert.mail" version="${gather-alert.version}">
+        <feature>gather-alert.core</feature>
         <bundle>mvn:org.gatherdata.gather-alert/org.apache.commons.email/${commons-email.version}</bundle>
         <bundle>mvn:org.gatherdata.gather-alert/javax.mail/${javax-mail.version}</bundle>
         <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.notify.mail/${gather-alert.version}</bundle>
     </feature>
 
     <feature name="gather-alert.pojo" version="${gather-alert.version}">
+        <feature>gather-alert.core</feature>
         <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.pojo/${gather-alert.version}</bundle>
     </feature>
     
     <feature name="gather-alert.db4o" version="${gather-alert.version}">
+        <feature>gather-alert.core</feature>
         <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.db4o/${gather-alert.version}</bundle>
+    </feature>
+
+    <feature name="gather-alert.felix" version="${gather-alert.version}">
+        <bundle>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.command/${gather-alert.version}</bundle>
     </feature>
 
     <feature name="gather-alert.all" version="${gather-alert.version}">
         <feature>gather-alert.core</feature>
         <feature>gather-alert.velocity</feature>
         <feature>gather-alert.mail</feature>
-        <feature>gather-alert.pojo</feature>
+        <feature>gather-alert.db4o</feature>
     </feature>
 
 </features>

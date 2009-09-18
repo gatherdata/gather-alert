@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.gatherdata.alert.builder.ActionPlanBuilder;
 import org.gatherdata.alert.core.model.ActionPlan;
+import org.gatherdata.alert.core.model.ActionPlanSupport;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
@@ -96,40 +97,9 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
         ActionPlan savedEntity = dao.save(originalEntity);
         ActionPlan retrievedEntity = dao.get(originalEntity.getUid());
 
-
-        assertThat(retrievedEntity.getUid(), equalTo(originalEntity.getUid()));
-        assertThat(retrievedEntity.getName(), equalTo(originalEntity.getName()));
-        assertThat(retrievedEntity.getDescription(), equalTo(originalEntity.getDescription()));
-        assertThat(retrievedEntity.getDateCreated(), equalTo(originalEntity.getDateCreated()));
+        assertTrue(ActionPlanSupport.deepEquals(originalEntity, savedEntity));
+        assertTrue(ActionPlanSupport.deepEquals(originalEntity, retrievedEntity));
         
-        DetectableEventType retrievedEventType = retrievedEntity.getEventType();
-        DetectableEventType originalEventType = originalEntity.getEventType();
-        assertThat(retrievedEventType.getUid(), equalTo(originalEventType.getUid()));
-        assertThat(retrievedEventType.getName(), equalTo(originalEventType.getName()));
-        assertThat(retrievedEventType.getDescription(), equalTo(originalEventType.getDescription()));
-        assertThat(retrievedEventType.getDateCreated(), equalTo(originalEventType.getDateCreated()));
-        
-        Set<PlannedNotification> retrievedNotifications = new HashSet<PlannedNotification>();
-        retrievedNotifications.addAll((Collection<? extends PlannedNotification>) retrievedEntity.getNotifications());
-        Set<PlannedNotification> originalNotifications = new HashSet<PlannedNotification>();
-        originalNotifications.addAll((Collection<? extends PlannedNotification>) originalEntity.getNotifications());
-        
-        assertThat(retrievedNotifications, containsAll(originalNotifications));
-        
-        RuleSet retrievedRuleSet = retrievedEntity.getRuleSet();
-        RuleSet originalRuleSet = originalEntity.getRuleSet();
-        assertThat(retrievedRuleSet.getContext(), equalTo(originalRuleSet.getContext()));
-        assertThat(retrievedRuleSet.getDateCreated(), equalTo(originalRuleSet.getDateCreated()));
-        assertThat(retrievedRuleSet.getIndicatedEventType(), equalTo(originalRuleSet.getIndicatedEventType()));
-        assertThat(retrievedRuleSet.getPredicateCount(), equalTo(originalRuleSet.getPredicateCount()));
-        
-        Set<LanguageScript> retrievedPredicates = new HashSet<LanguageScript>();
-        retrievedPredicates.addAll((Collection<? extends LanguageScript>) retrievedRuleSet.getPredicates());
-
-        Set<LanguageScript> originalPredicates = new HashSet<LanguageScript>();
-        originalPredicates.addAll((Collection<? extends LanguageScript>) originalRuleSet.getPredicates());
-
-        assertThat(retrievedPredicates, containsAll(originalPredicates));
     }
     
     @Test
@@ -153,6 +123,19 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
         	assertTrue(entitiesToSave.contains(plan));
         }
         endTransaction();
+    }
+    
+    @Test
+    public void shouldGetPlannedNotificationsRelatedToEventType() {
+        ActionPlan originalPlan = createMockEntity();
+        dao.save(originalPlan);
+        
+        Collection<PlannedNotification> retrievedNotifications = new ArrayList<PlannedNotification>();
+        retrievedNotifications.addAll((Collection<? extends PlannedNotification>) dao.getPlannedNotificationsFor(originalPlan.getEventType()));
+        
+        Collection<PlannedNotification> originalNotifications = new ArrayList<PlannedNotification>();
+        originalNotifications.addAll((Collection<? extends PlannedNotification>) originalPlan.getNotifications());
+        assertThat(retrievedNotifications, containsAll(originalNotifications));
     }
 
 }

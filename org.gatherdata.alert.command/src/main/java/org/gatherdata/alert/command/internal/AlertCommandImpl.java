@@ -10,11 +10,13 @@ import org.apache.felix.shell.Command;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectedEvent;
 import org.gatherdata.alert.core.model.LanguageScript;
+import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
 import org.gatherdata.alert.core.spi.TemplateRenderer;
 import org.gatherdata.alert.core.util.ActionPlanFormatter;
+import org.gatherdata.alert.core.util.PlannedNotificationFormatter;
 import org.gatherdata.alert.core.util.RuleSetFormatter;
 
 import com.google.inject.Inject;
@@ -89,6 +91,10 @@ public class AlertCommandImpl implements Command {
                             out.println(RuleSetFormatter.toLongString(planRules));
                         } else {
                             out.println("\tplan has no defined RuleSet");
+                        }
+                        out.println("notification plans...");
+                        for (PlannedNotification notification : plan.getNotifications()) {
+                            out.println("\t" + PlannedNotificationFormatter.toLongString(notification));
                         }
                     }
                 } else {

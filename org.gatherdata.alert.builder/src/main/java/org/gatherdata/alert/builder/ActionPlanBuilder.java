@@ -63,6 +63,7 @@ public class ActionPlanBuilder implements FluentBuilder<ActionPlan> {
 
     public ActionPlanBuilder notifying(PlannedNotificationBuilder... plannedNotifications) {
         for (PlannedNotificationBuilder plannedNotification : plannedNotifications) {
+            plannedNotification.setEventType(actionPlan.getEventType());
             actionPlan.add(plannedNotification.build());
         }
         return this;

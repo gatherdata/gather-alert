@@ -39,9 +39,9 @@ public class EmailNotifierTest {
 		InternetAddress mailtoUrl = new InternetAddress("nobody@here.com");
 		String expectedBody = "Hi. This is a test email that somehow escaped to an actual address. Sorry about that.";
 		
-		EmailNotifier emailService = new EmailNotifier();
 		System.setProperty("mail.smtp.port", Integer.toString(MOCK_SMTP_PORT));
 		System.setProperty("mail.smtp.host", "localhost");
+        EmailNotifier emailService = new EmailNotifier();
 		
 		try {
 			emailService.sendEmail(Arrays.asList(mailtoUrl), null, expectedBody);
@@ -71,9 +71,9 @@ public class EmailNotifierTest {
 		final String expectedBody = "Hi. This is a test email that somehow escaped to an actual address. Sorry about that.";
 		mockNotification.setMessage(expectedBody);
 		
-		EmailNotifier emailService = new EmailNotifier();
 		System.setProperty("mail.smtp.port", Integer.toString(MOCK_SMTP_PORT));
 		System.setProperty("mail.smtp.host", "localhost");
+        EmailNotifier emailService = new EmailNotifier();
 		
 		try {
 			//emailService.sendEmail(Arrays.asList(mailtoUrl), null, expectedBody);

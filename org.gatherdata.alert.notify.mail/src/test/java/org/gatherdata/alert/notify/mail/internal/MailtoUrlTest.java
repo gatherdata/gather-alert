@@ -1,6 +1,9 @@
 package org.gatherdata.alert.notify.mail.internal;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.junit.Test;
 
@@ -17,5 +20,13 @@ public class MailtoUrlTest {
     public void shouldGetEmptyHeadersWhenNoneProvided() throws MalformedURLException {
         MailtoUrl testUrl = new MailtoUrl("mailto:sysadmin@tembopublic.org");
         assertThat(testUrl.getHeaderMap(), notNullValue());
+    }
+    
+    @Test
+    public void shouldParseMailToUrlAsUri() throws URISyntaxException, MalformedURLException {
+        URI mailto = new URI("mailto:sysadmin@tembopublic.org");
+        assertThat(mailto.getScheme(), is("mailto"));
+        URL asURL = mailto.toURL();
+        assertThat(asURL, notNullValue());
     }
 }

@@ -1,6 +1,8 @@
 package org.gatherdata.alert.command.internal;
 
 import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -10,10 +12,13 @@ import org.apache.felix.shell.Command;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectedEvent;
 import org.gatherdata.alert.core.model.LanguageScript;
+import org.gatherdata.alert.core.model.MutableNotification;
+import org.gatherdata.alert.core.model.Notification;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
+import org.gatherdata.alert.core.spi.Notifier;
 import org.gatherdata.alert.core.spi.TemplateRenderer;
 import org.gatherdata.alert.core.util.ActionPlanFormatter;
 import org.gatherdata.alert.core.util.PlannedNotificationFormatter;
@@ -37,6 +42,9 @@ public class AlertCommandImpl implements Command {
     
     @Inject
     Iterable<TemplateRenderer> renderers;
+    
+    @Inject
+    Iterable<Notifier> notifiers;
 
     public void execute(String argString, PrintStream out, PrintStream err) {
         Matcher argMatcher = commandPattern.matcher(argString);
@@ -81,26 +89,45 @@ public class AlertCommandImpl implements Command {
                     err.println("Detect what with who, now? I'm confused by: " + subArguments);
                 }
             } else if ("list".equals(subCommand)) {
-                Matcher listArguments = subCommandPattern.matcher(subArguments);
-                Iterable<ActionPlan> plans = (Iterable<ActionPlan>) alertService.getAll();
-                if (plans != null) {
-                    for (ActionPlan plan : alertService.getAll()) {
-                        out.println(ActionPlanFormatter.toString(plan));
-                        RuleSet planRules = plan.getRuleSet();
-                        if (planRules != null) {
-                            out.println(RuleSetFormatter.toLongString(planRules));
-                        } else {
-                            out.println("\tplan has no defined RuleSet");
+                String category = subArguments.trim();
+                if ("notifiers".equals(category)) {
+                    for (Notifier notifier : notifiers) {
+                        out.println(notifier.toString() + " can handle these destination schemes...");
+                        out.print("\t");
+                        for (String scheme : notifier.getSchemeTypes()) {
+                            out.print(scheme + " ");
                         }
-                        out.println("notification plans...");
-                        for (PlannedNotification notification : plan.getNotifications()) {
-                            out.println("\t" + PlannedNotificationFormatter.toLongString(notification));
+                        out.println();
+                    }
+                } else if ("renderers".equals(category)) {
+                    for (TemplateRenderer renderer : renderers) {
+                        out.println(renderer.toString() + " can render templates of type...");
+                        out.print("\t");
+                        for (String type : renderer.getTemplateTypes()) {
+                            out.print(type + " ");
                         }
+                        out.println();
                     }
                 } else {
-                    err.println("AlertService.getAll() returned null. Current AlertServiceDao is probably broken.");
+                    Iterable<ActionPlan> plans = (Iterable<ActionPlan>) alertService.getAll();
+                    if (plans != null) {
+                        for (ActionPlan plan : alertService.getAll()) {
+                            out.println(ActionPlanFormatter.toString(plan));
+                            RuleSet planRules = plan.getRuleSet();
+                            if (planRules != null) {
+                                out.println(RuleSetFormatter.toLongString(planRules));
+                            } else {
+                                out.println("\tplan has no defined RuleSet");
+                            }
+                            out.println("notification plans...");
+                            for (PlannedNotification notification : plan.getNotifications()) {
+                                out.println("\t" + PlannedNotificationFormatter.toLongString(notification));
+                            }
+                        }
+                    } else {
+                        err.println("AlertService.getAll() returned null. Current AlertServiceDao is probably broken.");
+                    }
                 }
-             
             } else if ("render".equals(subCommand)) { 
                 Matcher filterArguments = subCommandPattern.matcher(subArguments);
                 if (filterArguments.matches()) {
@@ -112,7 +139,27 @@ public class AlertCommandImpl implements Command {
                         }
                     }
                 }
-
+            } else if ("send".equals(subCommand)) {
+                Matcher sendArguments = subCommandPattern.matcher(subArguments);
+                if (sendArguments.matches()) {
+                    String destination = sendArguments.group(1);
+                    String message = sendArguments.group(2);
+                    URI destinationURI = null;
+                    try {
+                        destinationURI = new URI(destination);
+                    } catch (URISyntaxException e) {
+                        err.println("bad destination, because: " + e.toString());
+                    }
+                    
+                    for (Notifier notifier : notifiers) {
+                        if (notifier.canSendTo(destinationURI)) {
+                            MutableNotification notice = new MutableNotification();
+                            notice.setDestination(destinationURI);
+                            notice.setMessage(message);
+                            notifier.notify(notice);
+                        }
+                    }
+                }
             } else {
                 err.println("sorry, '" + subCommand + "' is not a recognized sub-command");
             }

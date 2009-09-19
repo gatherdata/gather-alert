@@ -1,6 +1,7 @@
 package org.gatherdata.alert.dao.db4o.model;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
@@ -10,16 +11,24 @@ import org.joda.time.DateTime;
 
 public class PlannedNotificationDb4o extends DescribedEntityDb4o implements PlannedNotification {
 
-    private URI destination;
+    private transient URI lazyDestination;
+    private String destinationAsAscii;
     private DetectableEventTypeDb4o eventType;
     private LanguageScriptDb4o template;
 
     public URI getDestination() {
-        return this.destination;
+        if ((this.lazyDestination == null) && (destinationAsAscii != null)) {
+            try {
+                lazyDestination = new URI(destinationAsAscii);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        return this.lazyDestination;
     }
     
-    public void setDestination(URI destination) {
-        this.destination = destination;
+    public void setDestination(String destinationAsAscii) {
+        this.destinationAsAscii = destinationAsAscii;
     }
 
     public DetectableEventType getEventType() {
@@ -41,7 +50,10 @@ public class PlannedNotificationDb4o extends DescribedEntityDb4o implements Plan
     public PlannedNotificationDb4o copy(PlannedNotification template) {
         if ((template != null) && (template != this)) {
             super.copy(template);
-            setDestination(template.getDestination());
+            URI templateDestination = template.getDestination();
+            if (templateDestination != null) {
+                setDestination(templateDestination.toASCIIString());
+            }
             DetectableEventType templateEventType = template.getEventType();
             if (templateEventType != null) {
                 setEventType((DetectableEventTypeDb4o) new DetectableEventTypeDb4o().copy(templateEventType));

@@ -14,9 +14,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- runtime properties -->
     <log4j.rootLogger>DEBUG</log4j.rootLogger>
+    <bundles.configuration.location>${basedir}/config</bundles.configuration.location>
+
     <!-- gather versions -->
     <gather-commons.version>1.0-SNAPSHOT</gather-commons.version>
     <gather-alert.version>1.0-SNAPSHOT</gather-alert.version>
+
     <!-- 3rd party versions -->
     <peaberry.version>1.1.1</peaberry.version>
     <guice.version>2.0-SNAPSHOT</guice.version>
@@ -164,10 +167,13 @@
                   <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
                   <noDependencies>true</noDependencies>
                   <provision>
+                      <param>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.10@1</param>
                       <param>${dao.provision-dependencies}</param>
                       <param>${dao.provision}</param>
                       <param>scan-features:mvn:org.gatherdata.gather-commons/org.gatherdata.commons.features/${gather-commons.version}/xml/features!/gather-core,${dao.gather-dependencies}@2</param>
-                      <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features/!/gather-alert.languages,gather-alert.st,gather-alert.velocity,gather-alert.mail@2</param>
+                      <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features!/gather-alert.languages,gather-alert.st</param>
+                      <param>scan-features:mvn:org.gatherdata.gather-alert/org.gatherdata.alert.features/${gather-alert.version}/xml/features!/gather-alert.velocity,gather-alert.mail@2</param>
+                      <param>mvn:org.ops4j.pax.confman/pax-confman-propsloader/0.2.2@2</param>
                   </provision>
               </configuration>
           </plugin>

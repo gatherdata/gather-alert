@@ -77,4 +77,13 @@ public class MailtoUrl {
         return getHeaderMap().get(EmailHeaders.SUBJECT_HEADER);
     }
 
+    public String getScheme() {
+        try {
+            return internalUrl.toURI().getScheme();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

@@ -1,7 +1,7 @@
 package org.gatherdata.alert.core.model.impl;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
-import org.gatherdata.commons.model.MutableDescribedEntity;
+import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 
 public class MutableDetectableEventType extends MutableDescribedEntity implements DetectableEventType {
 

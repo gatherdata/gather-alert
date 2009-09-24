@@ -3,7 +3,7 @@ package org.gatherdata.alert.core.model.impl;
 import java.net.URI;
 
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.commons.model.MutableDescribedEntity;
+import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 
 public class MutableLanguageScript extends MutableDescribedEntity  implements LanguageScript {
 

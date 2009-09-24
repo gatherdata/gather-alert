@@ -9,8 +9,8 @@ import java.util.Vector;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
-import org.gatherdata.commons.model.MutableDescribedEntity;
-import org.gatherdata.commons.model.MutableEntity;
+import org.gatherdata.commons.model.impl.MutableDescribedEntity;
+import org.gatherdata.commons.model.impl.MutableEntity;
 
 public class MutableRuleSet extends MutableEntity implements RuleSet {
 

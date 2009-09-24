@@ -8,7 +8,7 @@ import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
-import org.gatherdata.commons.model.MutableDescribedEntity;
+import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 
 public class MutableActionPlan extends MutableDescribedEntity implements ActionPlan {
 

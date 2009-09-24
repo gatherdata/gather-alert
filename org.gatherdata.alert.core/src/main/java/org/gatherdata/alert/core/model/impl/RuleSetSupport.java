@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.gatherdata.commons.model.DescribedEntitySupport;
+import org.gatherdata.commons.model.impl.DescribedEntitySupport;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 

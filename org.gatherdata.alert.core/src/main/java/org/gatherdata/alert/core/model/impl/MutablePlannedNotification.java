@@ -5,7 +5,7 @@ import java.net.URI;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
-import org.gatherdata.commons.model.MutableDescribedEntity;
+import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 
 public class MutablePlannedNotification extends MutableDescribedEntity implements PlannedNotification {
 

@@ -20,11 +20,11 @@ import java.util.Set;
 
 import org.gatherdata.alert.builder.ActionPlanBuilder;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.ActionPlanSupport;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.ActionPlanSupport;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.dao.db4o.internal.AlertServiceDaoDb4o;
 import org.gatherdata.commons.spi.BaseStorageDaoTest;

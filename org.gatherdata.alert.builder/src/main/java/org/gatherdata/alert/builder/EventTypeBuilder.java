@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
-import org.gatherdata.alert.core.model.MutableDetectableEventType;
+import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.commons.net.CbidFactory;
 import org.joda.time.DateTime;
 

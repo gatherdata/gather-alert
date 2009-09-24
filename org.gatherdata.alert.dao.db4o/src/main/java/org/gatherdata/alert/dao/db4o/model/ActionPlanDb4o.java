@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.ActionPlanSupport;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.ActionPlanSupport;
 import org.gatherdata.commons.db.db4o.model.DescribedEntityDb4o;
 import org.joda.time.DateTime;
 

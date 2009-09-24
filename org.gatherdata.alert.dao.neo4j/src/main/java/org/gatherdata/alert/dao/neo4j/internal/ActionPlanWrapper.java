@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
-import org.gatherdata.alert.core.model.MutableActionPlan;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.MutableActionPlan;
 import org.gatherdata.commons.model.neo4j.DescribedNodeWrapper;
 import org.gatherdata.commons.model.neo4j.GatherNodeWrapper;
 import org.joda.time.DateTime;

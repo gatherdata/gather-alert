@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.gatherdata.alert.builder.ActionPlanBuilder;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.MutableActionPlan;
-import org.gatherdata.alert.core.model.ActionPlanSupport;
+import org.gatherdata.alert.core.model.impl.ActionPlanSupport;
+import org.gatherdata.alert.core.model.impl.MutableActionPlan;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -80,7 +80,7 @@ public class ActionPlanDb4oTest {
         
         ActionPlan derivedEntity = new ActionPlanDb4o().copy(originalEntity);
         
-        assertTrue(org.gatherdata.alert.core.model.ActionPlanSupport.deepEquals(derivedEntity, originalEntity));
+        assertTrue(org.gatherdata.alert.core.model.impl.ActionPlanSupport.deepEquals(derivedEntity, originalEntity));
     }
 
 	@Test

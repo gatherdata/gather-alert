@@ -3,8 +3,8 @@ package org.gatherdata.alert.builder;
 import org.apache.commons.lang.NullArgumentException;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.alert.core.model.MutableRuleSet;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.MutableRuleSet;
 import org.gatherdata.commons.net.CbidFactory;
 import org.joda.time.DateTime;
 

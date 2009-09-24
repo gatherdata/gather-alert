@@ -2,7 +2,7 @@ package org.gatherdata.alert.notify.mail.internal;
 
 import static org.junit.Assert.fail;
 
-import org.gatherdata.alert.core.model.MutableNotification;
+import org.gatherdata.alert.core.model.impl.MutableNotification;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;

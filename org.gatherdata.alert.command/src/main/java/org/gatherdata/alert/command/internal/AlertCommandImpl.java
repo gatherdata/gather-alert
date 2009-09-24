@@ -12,17 +12,17 @@ import org.apache.felix.shell.Command;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectedEvent;
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.alert.core.model.MutableNotification;
 import org.gatherdata.alert.core.model.Notification;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.ActionPlanFormatter;
+import org.gatherdata.alert.core.model.impl.MutableNotification;
+import org.gatherdata.alert.core.model.impl.PlannedNotificationFormatter;
+import org.gatherdata.alert.core.model.impl.RuleSetFormatter;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.EventDetector;
 import org.gatherdata.alert.core.spi.Notifier;
 import org.gatherdata.alert.core.spi.TemplateRenderer;
-import org.gatherdata.alert.core.util.ActionPlanFormatter;
-import org.gatherdata.alert.core.util.PlannedNotificationFormatter;
-import org.gatherdata.alert.core.util.RuleSetFormatter;
 
 import com.google.inject.Inject;
 

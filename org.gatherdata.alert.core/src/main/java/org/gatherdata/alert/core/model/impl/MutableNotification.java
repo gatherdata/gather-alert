@@ -1,6 +1,8 @@
-package org.gatherdata.alert.core.model;
+package org.gatherdata.alert.core.model.impl;
 
 import java.net.URI;
+
+import org.gatherdata.alert.core.model.Notification;
 
 public class MutableNotification implements Notification {
     private URI destination;

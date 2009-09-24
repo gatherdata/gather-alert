@@ -1,4 +1,4 @@
-package org.gatherdata.alert.core.model;
+package org.gatherdata.alert.core.model.impl;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import org.gatherdata.alert.core.model.DetectableEventType;
+import org.gatherdata.alert.core.model.LanguageScript;
+import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.commons.model.MutableDescribedEntity;
 import org.gatherdata.commons.model.MutableEntity;
 

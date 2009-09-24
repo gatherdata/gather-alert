@@ -6,9 +6,9 @@ import java.util.Random;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.alert.core.model.MutableLanguageScript;
-import org.gatherdata.alert.core.model.MutableRuleSet;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.MutableLanguageScript;
+import org.gatherdata.alert.core.model.impl.MutableRuleSet;
 
 public class MockRuleSetFactory {
 

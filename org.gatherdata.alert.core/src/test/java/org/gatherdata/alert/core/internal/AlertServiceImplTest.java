@@ -7,7 +7,7 @@ import static org.easymock.EasyMock.verify;
 
 import org.gatherdata.alert.core.internal.AlertServiceImpl;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.MutableActionPlan;
+import org.gatherdata.alert.core.model.impl.MutableActionPlan;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.commons.spi.BaseStorageServiceTest;

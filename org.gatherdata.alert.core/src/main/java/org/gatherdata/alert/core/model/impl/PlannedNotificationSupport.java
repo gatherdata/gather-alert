@@ -1,6 +1,8 @@
-package org.gatherdata.alert.core.model;
+package org.gatherdata.alert.core.model.impl;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.gatherdata.alert.core.model.PlannedNotification;
+import org.gatherdata.commons.model.DescribedEntitySupport;
 
 public class PlannedNotificationSupport {
 

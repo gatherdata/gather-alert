@@ -1,7 +1,9 @@
-package org.gatherdata.alert.core.model;
+package org.gatherdata.alert.core.model.impl;
 
 import java.net.URI;
 
+import org.gatherdata.alert.core.model.DetectedEvent;
+import org.gatherdata.alert.core.model.SentNotice;
 import org.gatherdata.commons.model.MutableEntity;
 import org.gatherdata.commons.net.CbidFactory;
 import org.joda.time.DateTime;

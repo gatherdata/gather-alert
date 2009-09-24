@@ -4,8 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
-import org.gatherdata.alert.core.model.MutablePlannedNotification;
 import org.gatherdata.alert.core.model.PlannedNotification;
+import org.gatherdata.alert.core.model.impl.MutablePlannedNotification;
 import org.gatherdata.commons.net.CbidFactory;
 import org.joda.time.DateTime;
 

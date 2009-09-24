@@ -1,4 +1,4 @@
-package org.gatherdata.alert.core.util;
+package org.gatherdata.alert.core.model.impl;
 
 import org.gatherdata.alert.core.model.DetectableEventType;
 

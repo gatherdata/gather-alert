@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.apache.commons.lang.NullArgumentException;
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.alert.core.model.MutableLanguageScript;
+import org.gatherdata.alert.core.model.impl.MutableLanguageScript;
 import org.gatherdata.commons.net.CbidFactory;
 import org.joda.time.DateTime;
 

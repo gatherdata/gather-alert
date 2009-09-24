@@ -1,17 +1,12 @@
-package org.gatherdata.alert.core.util;
+package org.gatherdata.alert.core.model.impl;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.gatherdata.alert.core.model.DescribedEntitySupport;
+import org.gatherdata.commons.model.DescribedEntitySupport;
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.alert.core.model.LanguageScriptSupport;
-import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 
 public class RuleSetSupport {

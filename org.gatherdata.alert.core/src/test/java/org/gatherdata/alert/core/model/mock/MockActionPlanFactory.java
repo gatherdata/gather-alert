@@ -7,9 +7,9 @@ import java.util.Random;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
-import org.gatherdata.alert.core.model.MutableActionPlan;
-import org.gatherdata.alert.core.model.MutableDetectableEventType;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.MutableActionPlan;
+import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.joda.time.DateTime;
 
 public class MockActionPlanFactory {

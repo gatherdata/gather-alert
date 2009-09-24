@@ -1,10 +1,12 @@
-package org.gatherdata.alert.core.model;
+package org.gatherdata.alert.core.model.impl;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.gatherdata.alert.core.util.RuleSetSupport;
+import org.gatherdata.alert.core.model.ActionPlan;
+import org.gatherdata.alert.core.model.PlannedNotification;
+import org.gatherdata.commons.model.DescribedEntitySupport;
 import org.gatherdata.commons.model.UniqueEntitySupport;
 
 public class ActionPlanSupport {

@@ -8,8 +8,6 @@ import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
 import static org.ops4j.peaberry.Peaberry.osgiModule;
 
 import org.gatherdata.alert.builder.ActionPlanBuilder;
-import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.mock.MockActionPlanFactory;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.ops4j.peaberry.Export;
 import org.osgi.framework.BundleActivator;
@@ -32,8 +30,6 @@ public final class OSGiActivator implements BundleActivator {
         createInjector(osgiModule(bc), new GuiceBindingModule()).injectMembers(this);
 
         alertService.save(ActionPlanBuilder.plan()
-                .named("example1")
-                .describedAs("an example test plan")
                 .lookingFor(
                         event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
                 .applyingRules(
@@ -41,7 +37,6 @@ public final class OSGiActivator implements BundleActivator {
                             .rule(expressedIn("js").script("/bar/.test(body)"))
                     )
                 .notifying(
-                        address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message")),
                         address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
                     )
                 .build());

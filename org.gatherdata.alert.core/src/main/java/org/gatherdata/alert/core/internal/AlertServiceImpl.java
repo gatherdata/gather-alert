@@ -11,8 +11,11 @@ import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.alert.core.model.impl.MutableActionPlan;
+import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.core.spi.AlertService;
+import org.gatherdata.commons.model.util.IdentityGenerator;
 
 import com.google.inject.Inject;
 
@@ -21,11 +24,11 @@ import com.google.inject.Inject;
  * 
  */
 public class AlertServiceImpl implements AlertService {
-	Log log = LogFactory.getLog(AlertService.class);
-	
-	@Inject
+    Log log = LogFactory.getLog(AlertService.class);
+
+    @Inject
     protected AlertServiceDao dao;
-	
+
     public boolean exists(URI uidOfActionPlan) {
         return dao.exists(uidOfActionPlan);
     }
@@ -45,12 +48,23 @@ public class AlertServiceImpl implements AlertService {
     }
 
     public void remove(URI uidOfActionPlan) {
-        // TODO Auto-generated method stub
-        
+        dao.remove(uidOfActionPlan);
     }
 
     public ActionPlan save(ActionPlan planToSave) {
+        planToSave.selfIdentify();
         return dao.save(planToSave);
+    }
+
+    public void update(ActionPlan planUpdate) {
+        URI uidToUpdate = planUpdate.getUid();
+        if (uidToUpdate != null) {
+            ActionPlan currentEntity = get(uidToUpdate);
+            MutableActionPlan transferEntity = new MutableActionPlan();
+            transferEntity.copy(currentEntity);
+            transferEntity.update(planUpdate);
+            dao.save(transferEntity);
+        }
     }
 
     public Iterable<RuleSet> getActiveRulesetsFor(String context) {
@@ -60,7 +74,5 @@ public class AlertServiceImpl implements AlertService {
     public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
         return dao.getPlannedNotificationsFor(eventType);
     }
-	
-
 
 }

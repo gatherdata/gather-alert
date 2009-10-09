@@ -27,8 +27,6 @@ public class ActionPlanBuilderTest {
 
     @Test
     public void shouldBuildAnActionPlan() throws URISyntaxException {
-        final String TEST_PLAN_NAME = "test plan";
-        final String TEST_PLAN_DESCRIPTION = "to see how the builder works";
         final String TEST_EVENT_NAME = "test event";
         final String TEST_EVENT_DESCRIPTION = "occurs only during tests";
         URI TEST_ADDRESS_URI = new URI("mailto:sysadmin@kollegger.name");
@@ -36,8 +34,6 @@ public class ActionPlanBuilderTest {
         final String MESSAGE_TEMPLATE_SCRIPT = "hello world";
         
         ActionPlan builtTestPlan = ActionPlanBuilder.plan()
-            .named(TEST_PLAN_NAME)
-            .describedAs(TEST_PLAN_DESCRIPTION)
             .lookingFor(
                     event(TEST_EVENT_NAME)
                     .describedAs(TEST_EVENT_DESCRIPTION))
@@ -52,8 +48,6 @@ public class ActionPlanBuilderTest {
             .build();
         
         assertThat(builtTestPlan, notNullValue());
-        assertThat(builtTestPlan.getName(), is(TEST_PLAN_NAME));
-        assertThat(builtTestPlan.getDescription(), is(TEST_PLAN_DESCRIPTION));
         
         assertThat(builtTestPlan.getEventType(), notNullValue());
         DetectableEventType builtEventType = builtTestPlan.getEventType();

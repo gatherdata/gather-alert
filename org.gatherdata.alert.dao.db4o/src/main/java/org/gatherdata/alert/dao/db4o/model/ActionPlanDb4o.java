@@ -60,7 +60,7 @@ public class ActionPlanDb4o extends DescribedEntityDb4o implements ActionPlan {
     
     @Override
     public String toString() {
-        return "ActionPlan [eventType = " + getEventType() + "]";
+        return "ActionPlan [name =" + getName() + "; eventType =" + getEventType() + "]";
     }
 
 

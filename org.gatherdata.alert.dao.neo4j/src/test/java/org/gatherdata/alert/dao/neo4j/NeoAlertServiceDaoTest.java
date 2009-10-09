@@ -60,17 +60,15 @@ public class NeoAlertServiceDaoTest extends BaseStorageDaoTest<ActionPlan, Alert
     @Override
     protected ActionPlan createMockEntity() {
         ActionPlan mockEntity = ActionPlanBuilder.plan()
-            .named("mock" + rnd.nextInt(1000))
-            .describedAs("an example test plan")
-        .lookingFor(
-                event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
-        .applyingRules(
-                rules("text/xml")
-                    .rule(expressedIn("js").script("/bar/.test(body)"))
-            )
-        .notifying(
-                address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
-            )
+            .lookingFor(
+                    event("barWithinFoo" + rnd.nextInt(1000)).describedAs("any occurrence of 'bar' within 'foo'"))
+            .applyingRules(
+                    rules("text/xml")
+                        .rule(expressedIn("js").script("/bar/.test(body)"))
+                )
+            .notifying(
+                    address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("test gather-alert message"))
+                )
         .build();
         return mockEntity;
     }

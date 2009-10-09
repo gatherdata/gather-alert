@@ -20,7 +20,7 @@
 	<artifactId>org.gatherdata.alert.content.example</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
-	<name>${bundle.symbolicName}</name>
+	<name>gather-alert - example action plans</name>
 
 	<packaging>bundle</packaging>
 

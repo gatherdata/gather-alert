@@ -18,12 +18,11 @@ public class MockDetectableEventFactory {
         try {
             eventUid = new URI("mockEvent:" + rnd.nextLong());
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         mock.setUid(eventUid);
-        mock.setName("mockEvent");
-        mock.setDescription("a mocked-up detectable event type");
+        mock.setName("mockEvent #" + rnd.nextLong());
+        mock.setDescription("a mocked-up detectable event type #" + rnd.nextLong());
         mock.setDateCreated(new DateTime());
         
         return mock;

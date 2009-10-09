@@ -1,7 +1,5 @@
 package org.gatherdata.alert.core.model;
 
-import java.net.URI;
-
 import org.gatherdata.commons.model.UniqueEntity;
 
 public interface RuleSet extends UniqueEntity {

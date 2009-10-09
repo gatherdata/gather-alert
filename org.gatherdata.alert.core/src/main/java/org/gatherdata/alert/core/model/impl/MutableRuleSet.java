@@ -9,6 +9,7 @@ import java.util.Vector;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
+import org.gatherdata.commons.model.UniqueEntity;
 import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 import org.gatherdata.commons.model.impl.MutableEntity;
 
@@ -63,6 +64,36 @@ public class MutableRuleSet extends MutableEntity implements RuleSet {
     public void setSatisfyAll(boolean shouldSatisfyAll) {
         this.isSatisfyAll = shouldSatisfyAll;
     }
+    
+    public RuleSet copy(RuleSet template) {
+        if (template != null) {
+            super.copy(template);
+            setActive(template.isActive());
+            setSatisfyAll(template.isSatisfyAll());
+            setContext(template.getContext());
+            DetectableEventType templateEvent = template.getIndicatedEventType();
+            if (templateEvent != null) {
+                setIndicatedEventType(new MutableDetectableEventType().copy(templateEvent));
+            } else {
+                setIndicatedEventType(null);
+            }
+            predicates.clear();
+            Iterable<? extends LanguageScript> templatePredicates = template.getPredicates();
+            if (templatePredicates != null) {
+                for (LanguageScript predicate : templatePredicates) {
+                    add(new MutableLanguageScript().copy(predicate));
+                }
+            }
+        }
+        return this;
+    }
+
+    public RuleSet update(RuleSet template) {
+        if (template != null) {
+            super.update(template);
+        }
+        return this;
+    }
 
     @Override
     public String toString() {
@@ -73,6 +104,15 @@ public class MutableRuleSet extends MutableEntity implements RuleSet {
     public int getPredicateCount() {
         return this.predicates.size();
     }
+
+    @Override
+    public URI selfIdentify() {
+        for (LanguageScript predicate : predicates) {
+            predicate.selfIdentify();
+        }
+        return super.selfIdentify();
+    }
+    
     
 
 }

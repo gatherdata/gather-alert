@@ -1,5 +1,10 @@
 package org.gatherdata.alert.command.internal;
 
+import static org.gatherdata.alert.builder.EventTypeBuilder.event;
+import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
+import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
+import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
+
 import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.felix.shell.Command;
+import org.gatherdata.alert.builder.ActionPlanBuilder;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.DetectedEvent;
 import org.gatherdata.alert.core.model.LanguageScript;
@@ -45,6 +51,8 @@ public class AlertCommandImpl implements Command {
     
     @Inject
     Iterable<Notifier> notifiers;
+
+    private int mockCount;
 
     public void execute(String argString, PrintStream out, PrintStream err) {
         Matcher argMatcher = commandPattern.matcher(argString);
@@ -115,13 +123,12 @@ public class AlertCommandImpl implements Command {
                             out.println(ActionPlanFormatter.toString(plan));
                             RuleSet planRules = plan.getRuleSet();
                             if (planRules != null) {
-                                out.println(RuleSetFormatter.toLongString(planRules));
+                                out.println("\trule: " + RuleSetFormatter.toLongString(planRules));
                             } else {
                                 out.println("\tplan has no defined RuleSet");
                             }
-                            out.println("notification plans...");
                             for (PlannedNotification notification : plan.getNotifications()) {
-                                out.println("\t" + PlannedNotificationFormatter.toLongString(notification));
+                                out.println("\tnotify: " + PlannedNotificationFormatter.toLongString(notification));
                             }
                         }
                     } else {
@@ -160,6 +167,9 @@ public class AlertCommandImpl implements Command {
                         }
                     }
                 }
+                
+            } else if ("mock".equals(subCommand)) {
+                createAndSaveMock();
             } else {
                 err.println("sorry, '" + subCommand + "' is not a recognized sub-command");
             }
@@ -167,6 +177,21 @@ public class AlertCommandImpl implements Command {
             err.println("sorry, don't know what to do with: " + argString);
         }
 
+    }
+
+    private void createAndSaveMock() {
+        mockCount++;
+        alertService.save(ActionPlanBuilder.plan()
+                .lookingFor(
+                        event("barWithinFoo #" + mockCount).describedAs("any occurrence of 'bar' within 'foo'"))
+                .applyingRules(
+                        rules("text/xml")
+                            .rule(expressedIn("js").script("/bar/.test(body)"))
+                    )
+                .notifying(
+                        address("mailto:sysadmin@kollegger.name").message(expressedIn("vm").script("mock gather-alert message #" + mockCount))
+                    )
+                .build());
     }
 
     public String getName() {

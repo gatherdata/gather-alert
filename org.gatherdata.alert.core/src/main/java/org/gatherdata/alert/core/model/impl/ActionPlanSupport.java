@@ -7,6 +7,7 @@ import java.util.Map;
 import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.commons.model.impl.DescribedEntitySupport;
+import org.gatherdata.commons.model.impl.UniqueEntitySupport;
 
 public class ActionPlanSupport extends DescribedEntitySupport {
 
@@ -27,10 +28,10 @@ public class ActionPlanSupport extends DescribedEntitySupport {
 		boolean areEqual = true;
 
 		if (lhs != rhs) { // don't bother comparing object to itself
-			areEqual = DescribedEntitySupport.deepEquals(lhs, rhs);
+			areEqual = UniqueEntitySupport.deepEquals(lhs, rhs);
 
 			if (areEqual) { // check EventTypes
-				DescribedEntitySupport.deepEquals(lhs.getEventType(), rhs
+				areEqual = DescribedEntitySupport.deepEquals(lhs.getEventType(), rhs
 						.getEventType());
 
 				if (areEqual) { // check PlannedNotifications

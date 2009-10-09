@@ -34,10 +34,8 @@ public class ActionPlanDb4oTest {
     private ActionPlan createMock() {
     	mock++;
     	return ActionPlanBuilder.plan()
-		.named("example" + mock)
-		.describedAs("an example test plan " + mock)
 		.lookingFor(
-            event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
+            event("barWithinFoo" + mock).describedAs("any occurrence of 'bar' within 'foo'" + mock))
             .applyingRules(
             		rules("text/xml")
             			.rule(expressedIn("js").script("/bar/.test(body)"))

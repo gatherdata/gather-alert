@@ -16,7 +16,7 @@ public class MockActionPlanFactory {
 
     static Random rnd = new Random();
     
-    public static ActionPlan create() {
+    public static MutableActionPlan create() {
         MutableActionPlan mock = new MutableActionPlan();
         
         URI planUid = null;
@@ -27,9 +27,7 @@ public class MockActionPlanFactory {
         }
         
         mock.setUid(planUid);
-        mock.setName("mockPlan");
         mock.setDateCreated(new DateTime());
-        mock.setDescription("a mocked-up ActionPlan");
         DetectableEventType mockEventType = MockDetectableEventFactory.create();
         mock.setEventType(mockEventType);
         mock.setRuleSet(MockRuleSetFactory.createHeaderFilter(mockEventType, "text/xml"));

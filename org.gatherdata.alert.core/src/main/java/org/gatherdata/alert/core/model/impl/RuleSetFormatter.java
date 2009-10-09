@@ -26,12 +26,13 @@ public class RuleSetFormatter {
         StringBuffer formattedString = new StringBuffer();
         Iterable<LanguageScript> scripts = (Iterable<LanguageScript>) ruleSet.getPredicates();
         formattedString.append("RuleSet " + ruleSet.getContext() + 
-                ", event " + EventTypeFormatter.toString(ruleSet.getIndicatedEventType()) + "\n");
+                ", " + EventTypeFormatter.toString(ruleSet.getIndicatedEventType()) + " ");
         if (scripts != null) {
-            formattedString.append("rules...\n");
+            formattedString.append(", on " + (ruleSet.isSatisfyAll() ? "all" : "any") + " [");
             for (LanguageScript script : scripts) {
-                formattedString.append("\t" + script.getLanguage() + ": " + script.getScript() + "\n");
+                formattedString.append("\t" + script.getLanguage() + ": " + script.getScript() + "; ");
             }
+            formattedString.append("]");
         } else {
             formattedString.append("\tno predicate scripts!");
         }

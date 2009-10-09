@@ -46,8 +46,6 @@ public class ActionPlanNodeAdapter implements NodeAdapter<ActionPlan, ActionPlan
         ActionPlanWrapper actionPlanWrapper = new ActionPlanWrapper(neo, actionPlanNode);
         actionPlanWrapper.setUid(template.getUid());
         actionPlanWrapper.setDateCreated(template.getDateCreated());
-        actionPlanWrapper.setName(template.getName());
-        actionPlanWrapper.setDescription(template.getDescription());
         
         DetectableEventType eventType = template.getEventType();
         Node eventTypeNode = neo.createNode();

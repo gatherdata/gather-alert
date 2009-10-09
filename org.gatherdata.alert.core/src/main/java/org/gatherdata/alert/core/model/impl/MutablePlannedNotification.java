@@ -5,6 +5,7 @@ import java.net.URI;
 import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
+import org.gatherdata.commons.model.DescribedEntity;
 import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 
 public class MutablePlannedNotification extends MutableDescribedEntity implements PlannedNotification {
@@ -42,4 +43,41 @@ public class MutablePlannedNotification extends MutableDescribedEntity implement
     public void setEventType(DetectableEventType eventType) {
         this.eventType = eventType;
     }
+
+    public PlannedNotification copy(PlannedNotification template) {
+        if (template != null) {
+            super.copy(template);
+            setDestination(template.getDestination());
+            DetectableEventType templateEvent = template.getEventType();
+            if (templateEvent != null) {
+                setEventType(new MutableDetectableEventType().copy(templateEvent)); 
+            } else {
+                setEventType(null);
+            }
+            LanguageScript templateTemplate = template.getTemplate();
+            if (templateTemplate != null) {
+                setTemplate(new MutableLanguageScript().copy(templateTemplate));
+            } else {
+                setTemplate(null);
+            }
+        }
+        return this;
+    }
+
+    public PlannedNotification update(PlannedNotification template) {
+        if (template != null) {
+            super.update(template);
+            setDestination(template.getDestination());
+            DetectableEventType templateEvent = template.getEventType();
+            if (templateEvent != null) {
+                setEventType(new MutableDetectableEventType().update(templateEvent)); 
+            }
+            LanguageScript templateTemplate = template.getTemplate();
+            if (templateTemplate != null) {
+                setTemplate(new MutableLanguageScript().update(templateTemplate));
+            }
+        }
+        return this;
+    }
+    
 }

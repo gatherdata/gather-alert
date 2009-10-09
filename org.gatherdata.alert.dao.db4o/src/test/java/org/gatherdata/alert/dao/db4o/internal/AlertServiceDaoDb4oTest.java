@@ -25,6 +25,8 @@ import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.model.impl.ActionPlanSupport;
+import org.gatherdata.alert.core.model.impl.MutableActionPlan;
+import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.dao.db4o.internal.AlertServiceDaoDb4o;
 import org.gatherdata.commons.spi.BaseStorageDaoTest;
@@ -76,10 +78,8 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
     protected ActionPlan createMockEntity() {
         mockCount++;
         ActionPlan mockEntity = ActionPlanBuilder.plan()
-        	.named("mock" + mockCount)
-        	.describedAs("an example test plan" + rnd.nextInt(1000))
         	.lookingFor(
-        			event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
+        			event("barWithinFoo" + mockCount).describedAs("any occurrence of 'bar' within 'foo'" + rnd.nextInt(1000)))
         			.applyingRules(
         					rules("text/xml")
         					.rule(expressedIn("js").script("/bar/.test(body)"))
@@ -99,7 +99,22 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
 
         assertTrue(ActionPlanSupport.deepEquals(originalEntity, savedEntity));
         assertTrue(ActionPlanSupport.deepEquals(originalEntity, retrievedEntity));
+    }
+
+    
+    @Test
+    public void shouldUpdateExistingEntityWithWorkingCopy() {
+        ActionPlan originalEntity = createMockEntity();
+        ActionPlan savedEntity = dao.save(originalEntity);
+        ActionPlan retrievedEntity = dao.get(originalEntity.getUid());
+
+        assertTrue(ActionPlanSupport.deepEquals(originalEntity, savedEntity));
+        assertTrue(ActionPlanSupport.deepEquals(originalEntity, retrievedEntity));
         
+        MutableActionPlan workingCopy = new MutableActionPlan();
+        workingCopy.copy(retrievedEntity);
+        
+        assertTrue(ActionPlanSupport.deepEquals(workingCopy, retrievedEntity));
     }
     
     @Test

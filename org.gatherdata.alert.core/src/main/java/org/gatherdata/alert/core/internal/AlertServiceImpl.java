@@ -53,7 +53,10 @@ public class AlertServiceImpl implements AlertService {
 
     public ActionPlan save(ActionPlan planToSave) {
         planToSave.selfIdentify();
-        return dao.save(planToSave);
+        dao.beginTransaction();
+        ActionPlan savedPlan = dao.save(planToSave);
+        dao.endTransaction();
+        return savedPlan;
     }
 
     public void update(ActionPlan planUpdate) {

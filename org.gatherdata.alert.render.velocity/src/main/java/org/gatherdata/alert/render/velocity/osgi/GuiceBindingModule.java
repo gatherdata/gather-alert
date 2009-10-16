@@ -15,9 +15,6 @@ import com.google.inject.Singleton;
 
 public class GuiceBindingModule extends AbstractModule {
 
-    @Inject
-    Export<TemplateRenderer> stringTemplateRenderer;
-
     @Override
     protected void configure() {
         bind(export(TemplateRenderer.class)).toProvider(service(VelocityTemplateRenderer.class).export());

@@ -2,5 +2,4 @@
 # Use this file to add customized Bnd instructions for the bundle
 #-----------------------------------------------------------------
 
-#Bundle-Activator: ${bundle.namespace}.internal.ExampleActivator
-Bundle-Module: ${bundle.namespace}.osgi.GuiceBindingModule
+Bundle-Activator: ${bundle.namespace}.osgi.OSGiActivator

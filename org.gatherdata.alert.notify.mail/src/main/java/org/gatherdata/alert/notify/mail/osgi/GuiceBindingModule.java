@@ -20,8 +20,6 @@ import com.google.inject.Singleton;
 
 public class GuiceBindingModule extends AbstractModule {
 
-    @Inject
-    Export<Notifier> emailNotifier;
 
     @Override
     protected void configure() {

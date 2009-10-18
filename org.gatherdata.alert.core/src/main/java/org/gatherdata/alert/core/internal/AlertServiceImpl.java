@@ -8,11 +8,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.model.impl.MutableActionPlan;
-import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.gatherdata.commons.model.util.IdentityGenerator;
@@ -72,10 +70,6 @@ public class AlertServiceImpl implements AlertService {
 
     public Iterable<RuleSet> getActiveRulesetsFor(String context) {
         return dao.getActiveRulesetsFor(context);
-    }
-
-    public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
-        return dao.getPlannedNotificationsFor(eventType);
     }
 
 }

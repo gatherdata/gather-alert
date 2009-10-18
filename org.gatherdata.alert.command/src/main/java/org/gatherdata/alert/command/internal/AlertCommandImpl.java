@@ -1,6 +1,5 @@
 package org.gatherdata.alert.command.internal;
 
-import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
@@ -182,8 +181,8 @@ public class AlertCommandImpl implements Command {
     private void createAndSaveMock() {
         mockCount++;
         alertService.save(ActionPlanBuilder.plan()
-                .lookingFor(
-                        event("barWithinFoo #" + mockCount).describedAs("any occurrence of 'bar' within 'foo'"))
+                .named("barWithinFoo #" + mockCount)
+                .describedAs("any occurrence of 'bar' within 'foo'")
                 .applyingRules(
                         rules("text/xml")
                             .rule(expressedIn("js").script("/bar/.test(body)"))

@@ -19,31 +19,26 @@ public class RuleSetSupport {
                     rhs.getDateCreated()).append(lhs.getContext(), rhs.getContext()).isEquals();
 
             if (areEqual) {
-                areEqual = DescribedEntitySupport.deepEquals(lhs.getIndicatedEventType(), rhs.getIndicatedEventType());
-
-                if (areEqual) {
-                    Map<URI, LanguageScript> lhsPredicateMap = new HashMap<URI, LanguageScript>();
-                    for (LanguageScript predicate : lhs.getPredicates()) {
-                        lhsPredicateMap.put(predicate.getUid(), predicate);
-                    }
-                    Map<URI, LanguageScript> rhsPredicateMap = new HashMap<URI, LanguageScript>();
-                    for (LanguageScript predicate : rhs.getPredicates()) {
-                        rhsPredicateMap.put(predicate.getUid(), predicate);
-                    }
-                    areEqual = lhsPredicateMap.size() == rhsPredicateMap.size();
-                    if (areEqual) { // check RuleSets
-                        for (URI key : lhsPredicateMap.keySet()) {
-                            LanguageScript lhsPredicate = lhsPredicateMap.get(key);
-                            LanguageScript rhsPredicate = rhsPredicateMap.get(key);
-
-                            areEqual = LanguageScriptSupport.deepEquals(lhsPredicate, rhsPredicate);
-
-                        }
-                    }
-
+                Map<URI, LanguageScript> lhsPredicateMap = new HashMap<URI, LanguageScript>();
+                for (LanguageScript predicate : lhs.getPredicates()) {
+                    lhsPredicateMap.put(predicate.getUid(), predicate);
                 }
-            }
+                Map<URI, LanguageScript> rhsPredicateMap = new HashMap<URI, LanguageScript>();
+                for (LanguageScript predicate : rhs.getPredicates()) {
+                    rhsPredicateMap.put(predicate.getUid(), predicate);
+                }
+                areEqual = lhsPredicateMap.size() == rhsPredicateMap.size();
+                if (areEqual) { // check RuleSets
+                    for (URI key : lhsPredicateMap.keySet()) {
+                        LanguageScript lhsPredicate = lhsPredicateMap.get(key);
+                        LanguageScript rhsPredicate = rhsPredicateMap.get(key);
 
+                        areEqual = LanguageScriptSupport.deepEquals(lhsPredicate, rhsPredicate);
+
+                    }
+                }
+
+            }
         }
         return areEqual;
     }

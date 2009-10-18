@@ -10,10 +10,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
-import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.dao.db4o.model.ActionPlanDb4o;
 import org.gatherdata.alert.dao.db4o.model.RuleSetDb4o;
@@ -92,20 +90,8 @@ public class AlertServiceDaoDb4o implements AlertServiceDao {
         entityDto.copy(entityToSave);
         db4o.store(entityDto);
         
-        return get(entityToSave.getUid());
-    }
-
-    public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
-        final DetectableEventType requestedEventType = eventType;
-        List<PlannedNotification> notifications = db4o.query(new Predicate<PlannedNotification>() {
-
-            @Override
-            public boolean match(PlannedNotification possibleMatch) {
-                return requestedEventType.equals(possibleMatch.getEventType());
-            }
-            
-        });
-        return notifications;
+        ActionPlan savedEntity = get(entityToSave.getUid());
+        return savedEntity;
     }
 
 }

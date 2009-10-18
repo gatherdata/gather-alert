@@ -15,7 +15,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
@@ -34,8 +33,8 @@ public class ActionPlanDb4oTest {
     private ActionPlan createMock() {
     	mock++;
     	return ActionPlanBuilder.plan()
-		.lookingFor(
-            event("barWithinFoo" + mock).describedAs("any occurrence of 'bar' within 'foo'" + mock))
+            .named("barWithinFoo" + mock)
+            .describedAs("any occurrence of 'bar' within 'foo'" + mock)
             .applyingRules(
             		rules("text/xml")
             			.rule(expressedIn("js").script("/bar/.test(body)"))

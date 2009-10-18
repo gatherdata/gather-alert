@@ -3,18 +3,18 @@ package org.gatherdata.alert.dao.db4o.model;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.gatherdata.alert.core.model.DetectableEventType;
+import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
-import org.gatherdata.commons.db.db4o.model.DescribedEntityDb4o;
+import org.gatherdata.commons.db.db4o.model.UniqueEntityDb4o;
 import org.joda.time.DateTime;
 
-public class PlannedNotificationDb4o extends DescribedEntityDb4o implements PlannedNotification {
+public class PlannedNotificationDb4o extends UniqueEntityDb4o implements PlannedNotification {
 
     private transient URI lazyDestination;
     private String destinationAsAscii;
-    private DetectableEventTypeDb4o eventType;
     private LanguageScriptDb4o template;
+    private ActionPlanDb4o plan;
 
     public URI getDestination() {
         if ((this.lazyDestination == null) && (destinationAsAscii != null)) {
@@ -29,14 +29,6 @@ public class PlannedNotificationDb4o extends DescribedEntityDb4o implements Plan
     
     public void setDestination(String destinationAsAscii) {
         this.destinationAsAscii = destinationAsAscii;
-    }
-
-    public DetectableEventType getEventType() {
-        return this.eventType;
-    }
-    
-    public void setEventType(DetectableEventTypeDb4o eventType) {
-        this.eventType = eventType;
     }
 
     public LanguageScript getTemplate() {
@@ -54,16 +46,20 @@ public class PlannedNotificationDb4o extends DescribedEntityDb4o implements Plan
             if (templateDestination != null) {
                 setDestination(templateDestination.toASCIIString());
             }
-            DetectableEventType templateEventType = template.getEventType();
-            if (templateEventType != null) {
-                setEventType((DetectableEventTypeDb4o) new DetectableEventTypeDb4o().copy(templateEventType));
-            }
             LanguageScript templateTemplate = template.getTemplate();
             if (templateTemplate != null) {
                 setTemplate(new LanguageScriptDb4o().copy(templateTemplate));
             }
         }
         return this;
+    }
+
+    public ActionPlan getPlan() {
+        return plan;
+    }
+    
+    public void setPlan(ActionPlanDb4o plan) {
+        this.plan = plan;
     }
 
 }

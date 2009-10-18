@@ -1,6 +1,5 @@
 package org.gatherdata.alert.dao.neo4j;
 
-import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
@@ -60,8 +59,8 @@ public class NeoAlertServiceDaoTest extends BaseStorageDaoTest<ActionPlan, Alert
     @Override
     protected ActionPlan createMockEntity() {
         ActionPlan mockEntity = ActionPlanBuilder.plan()
-            .lookingFor(
-                    event("barWithinFoo" + rnd.nextInt(1000)).describedAs("any occurrence of 'bar' within 'foo'"))
+            .named("barWithinFoo" + rnd.nextInt(1000))
+            .describedAs("any occurrence of 'bar' within 'foo'")
             .applyingRules(
                     rules("text/xml")
                         .rule(expressedIn("js").script("/bar/.test(body)"))

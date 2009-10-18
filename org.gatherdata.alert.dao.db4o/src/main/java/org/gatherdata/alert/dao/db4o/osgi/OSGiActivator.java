@@ -3,6 +3,7 @@ package org.gatherdata.alert.dao.db4o.osgi;
 import static com.google.inject.Guice.createInjector;
 import static org.ops4j.peaberry.Peaberry.osgiModule;
 
+import com.db4o.ObjectContainer;
 import com.db4o.osgi.Db4oService;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 
@@ -21,7 +22,10 @@ public final class OSGiActivator implements BundleActivator {
     
     @Inject
     Export<AlertServiceDao> alertServiceDao;
-        
+    
+    @Inject
+    ObjectContainer db4o;
+
     /**
      * Called whenever the OSGi framework starts our bundle
      */
@@ -36,6 +40,6 @@ public final class OSGiActivator implements BundleActivator {
      * Called whenever the OSGi framework stops our bundle
      */
     public void stop(BundleContext bc) throws Exception {
-
+        db4o.close();
     }
 }

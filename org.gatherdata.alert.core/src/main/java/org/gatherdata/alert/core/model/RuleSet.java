@@ -5,6 +5,13 @@ import org.gatherdata.commons.model.UniqueEntity;
 public interface RuleSet extends UniqueEntity {
     
     /**
+     * Returns the plan of which this RuleSet is a member.
+     * 
+     * @return the containing plan
+     */
+    public abstract ActionPlan getPlan();
+    
+    /**
      * Returns whether this ruleset is currently active. 
      * Only active rulesets should be evaluated.
      * 
@@ -19,15 +26,7 @@ public interface RuleSet extends UniqueEntity {
      * @return
      */
     public abstract String getContext();
-    
-    /**
-     * Gets the uri of the event-type which is indicated
-     * by evaluating this ruleset against a subject.
-     * 
-     * @return
-     */
-    public abstract DetectableEventType getIndicatedEventType();
-    
+        
     /**
      * Whether this ruleset is satisfied by all of the predicates
      * returning true. Otherwise, the ruleset should be considered

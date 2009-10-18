@@ -1,7 +1,6 @@
 package org.gatherdata.alert.content.example.osgi;
 
 import static com.google.inject.Guice.createInjector;
-import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
@@ -30,8 +29,8 @@ public final class OSGiActivator implements BundleActivator {
         createInjector(osgiModule(bc), new GuiceBindingModule()).injectMembers(this);
 
         alertService.save(ActionPlanBuilder.plan()
-                .lookingFor(
-                        event("barWithinFoo").describedAs("any occurrence of 'bar' within 'foo'"))
+                .named("barWithinFoo")
+                .describedAs("any occurrence of 'bar' within 'foo'")
                 .applyingRules(
                         rules("text/xml")
                             .rule(expressedIn("js").script("/bar/.test(body)"))

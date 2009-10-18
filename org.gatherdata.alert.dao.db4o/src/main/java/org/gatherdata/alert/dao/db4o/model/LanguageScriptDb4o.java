@@ -36,4 +36,11 @@ public class LanguageScriptDb4o extends DescribedEntityDb4o implements LanguageS
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "LanguageScript [language=" + language + ", script=" + script + "]";
+    }
+    
+    
+
 }

@@ -3,7 +3,6 @@ package org.gatherdata.alert.builder;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.impl.MutablePlannedNotification;
 import org.gatherdata.commons.net.CbidFactory;
@@ -35,7 +34,7 @@ public class PlannedNotificationBuilder implements FluentBuilder<PlannedNotifica
         return this;
     }
 
-    public PlannedNotification build() {
+    public MutablePlannedNotification build() {
         if (plannedNotification.getName() == null) {
             plannedNotification.setName("plan");
         }
@@ -56,7 +55,4 @@ public class PlannedNotificationBuilder implements FluentBuilder<PlannedNotifica
         return plannedNotification;
     }
 
-    public void setEventType(DetectableEventType eventType) {
-        plannedNotification.setEventType(eventType);
-    }
 }

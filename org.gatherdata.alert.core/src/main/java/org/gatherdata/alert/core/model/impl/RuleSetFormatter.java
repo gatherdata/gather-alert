@@ -25,8 +25,7 @@ public class RuleSetFormatter {
     public static String toLongString(RuleSet ruleSet) {
         StringBuffer formattedString = new StringBuffer();
         Iterable<LanguageScript> scripts = (Iterable<LanguageScript>) ruleSet.getPredicates();
-        formattedString.append("RuleSet " + ruleSet.getContext() + 
-                ", " + EventTypeFormatter.toString(ruleSet.getIndicatedEventType()) + " ");
+        formattedString.append("RuleSet " + ruleSet.getContext());
         if (scripts != null) {
             formattedString.append(", on " + (ruleSet.isSatisfyAll() ? "all" : "any") + " [");
             for (LanguageScript script : scripts) {

@@ -4,7 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Random;
 
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.model.impl.MutableLanguageScript;
@@ -22,20 +21,21 @@ public class MockRuleSetFactory {
      * @param inDetectionContext
      * @return
      */
-    public static MutableRuleSet createHeaderFilter(DetectableEventType forEvent, String inDetectionContext) {
+    public static MutableRuleSet createHeaderFilter(String inDetectionContext) {
         MutableRuleSet mock = new MutableRuleSet();
         
         mock.setActive(true);
         mock.setContext(inDetectionContext);
-        mock.setIndicatedEventType(forEvent);
         mock.setSatisfyAll(true);
         try {
             mock.setUid(new URI("example:" + rnd.nextLong()));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        mock.add(new MutableLanguageScript("js", "/bar/.test(body)")); // weak javascript regex match for bar anywhere within angle brackets of body
-        
+        MutableLanguageScript mockPredicate = new MutableLanguageScript("js", "/bar/.test(body)");
+        mockPredicate.selfIdentify();
+        mock.add(mockPredicate);
+        mock.selfIdentify();
         return mock;
     }
 

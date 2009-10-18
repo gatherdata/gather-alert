@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.commons.model.UniqueEntity;
+import org.gatherdata.commons.model.impl.MutableDescribedEntity;
 import org.gatherdata.commons.model.impl.MutableEntity;
 
-public class MutableActionPlan extends MutableEntity implements ActionPlan {
+public class MutableActionPlan extends MutableDescribedEntity implements ActionPlan {
 
     /**
      * Auto-generated.
@@ -20,23 +20,15 @@ public class MutableActionPlan extends MutableEntity implements ActionPlan {
 
     protected static final ActionPlanSupport support = new ActionPlanSupport();
 
-    private DetectableEventType eventType;
     private final List<PlannedNotification> plannedNotifications = new ArrayList<PlannedNotification>();
     private RuleSet ruleset;
-
-    public DetectableEventType getEventType() {
-        return this.eventType;
-    }
-
-    public void setEventType(DetectableEventType eventType) {
-        this.eventType = eventType;
-    }
 
     public Iterable<PlannedNotification> getNotifications() {
         return this.plannedNotifications;
     }
 
-    public void add(PlannedNotification plannedNotification) {
+    public void add(MutablePlannedNotification plannedNotification) {
+        plannedNotification.setPlan(this);
         this.plannedNotifications.add(plannedNotification);
     }
 
@@ -44,29 +36,28 @@ public class MutableActionPlan extends MutableEntity implements ActionPlan {
         return this.ruleset;
     }
 
-    public void setRuleSet(RuleSet ruleset) {
+    public void setRuleSet(MutableRuleSet ruleset) {
+        ruleset.setPlan(this);
         this.ruleset = ruleset;
     }
 
     public ActionPlan copy(ActionPlan template) {
         if (template != null) {
             super.copy(template);
-            DetectableEventType templateEvent = template.getEventType();
-            if (templateEvent != null) {
-                setEventType(new MutableDetectableEventType().copy(templateEvent));
-            } else {
-                setEventType(null);
-            }
             plannedNotifications.clear();
             Iterable<? extends PlannedNotification> templateNotifications = template.getNotifications();
             if (templateNotifications != null) {
                 for (PlannedNotification templateNotification : templateNotifications) {
-                    add(new MutablePlannedNotification().copy(templateNotification));
+                    MutablePlannedNotification copiedNotification = new MutablePlannedNotification();
+                    copiedNotification.copy(templateNotification);
+                    add(copiedNotification);
                 }
             }
             RuleSet templateRuleSet = template.getRuleSet();
             if (templateRuleSet != null) {
-                setRuleSet(new MutableRuleSet().copy(templateRuleSet));
+                MutableRuleSet copiedRuleset = new MutableRuleSet();
+                copiedRuleset.copy(templateRuleSet);
+                setRuleSet(copiedRuleset);
             } else {
                 setRuleSet(null);
             }
@@ -77,20 +68,21 @@ public class MutableActionPlan extends MutableEntity implements ActionPlan {
     public ActionPlan update(ActionPlan template) {
         if (template != null) {
             super.update(template);
-            DetectableEventType templateEvent = template.getEventType();
-            if (templateEvent != null) {
-                MutableDetectableEventType updatedEvent = new MutableDetectableEventType();
-                updatedEvent.copy(getEventType());
-                updatedEvent.update(templateEvent);
-                setEventType(updatedEvent);
-            }
             for (PlannedNotification templateNotification : template.getNotifications()) {
                 if (!plannedNotifications.contains(templateNotification)) {
-                    add(templateNotification);
+                    MutablePlannedNotification updatedNotification = new MutablePlannedNotification();
+                    updatedNotification.copy(templateNotification);
+                    add(updatedNotification);
+                } else {
+                    MutablePlannedNotification existingNotification = findNotification(templateNotification.getUid());
+                    existingNotification.update(templateNotification);
+                    plannedNotifications.remove(existingNotification);
+                    add(existingNotification);
+
                 }
             }
             RuleSet templateRuleSet = template.getRuleSet();
-            if (templateEvent != null) {
+            if (templateRuleSet != null) {
                 MutableRuleSet updatedRuleSet = new MutableRuleSet();
                 updatedRuleSet.copy(getRuleSet());
                 updatedRuleSet.update(templateRuleSet);
@@ -100,9 +92,20 @@ public class MutableActionPlan extends MutableEntity implements ActionPlan {
         return this;
     }
 
+    public MutablePlannedNotification findNotification(URI uid) {
+        MutablePlannedNotification foundNotification = null;
+        for (PlannedNotification possibleNotification : plannedNotifications) {
+            if (possibleNotification.getUid().equals(uid)) {
+                foundNotification = new MutablePlannedNotification();
+                foundNotification.copy(possibleNotification);
+            }
+        }
+        return foundNotification;
+    }
+
     @Override
     public String toString() {
-        return "ActionPlan [eventType = " + getEventType() + "]";
+        return "ActionPlan [" + getName() + " : " + getDescription() + "]";
     }
 
     @Override
@@ -120,12 +123,15 @@ public class MutableActionPlan extends MutableEntity implements ActionPlan {
 
     @Override
     public URI selfIdentify() {
-        if (eventType != null) eventType.selfIdentify();
         if (ruleset != null) ruleset.selfIdentify();
         for (PlannedNotification notification : plannedNotifications) {
             notification.selfIdentify();
         }
         return super.selfIdentify();
+    }
+
+    public void clearNotifications() {
+        plannedNotifications.clear();
     }
     
     

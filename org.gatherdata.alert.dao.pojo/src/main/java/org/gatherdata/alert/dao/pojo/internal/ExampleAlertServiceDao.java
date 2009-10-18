@@ -10,10 +10,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
-import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 
 public class ExampleAlertServiceDao implements AlertServiceDao {
@@ -84,27 +82,8 @@ public class ExampleAlertServiceDao implements AlertServiceDao {
     public ActionPlan save(ActionPlan planToSave) {
         uriToActionPlanMap.put(planToSave.getUid(), planToSave);
         save(planToSave.getRuleSet());
-        for(PlannedNotification notification : planToSave.getNotifications()) {
-            save(planToSave.getEventType(), notification);
-        }
         return planToSave;
     }
 
-    public void save(DetectableEventType eventType, PlannedNotification notification) {
-        List<PlannedNotification> notificationList = eventToNotificationMap.get(eventType.getUid());
-        if (notificationList == null) {
-            notificationList = new ArrayList<PlannedNotification>();
-            eventToNotificationMap.put(eventType.getUid(), notificationList);
-        }
-        notificationList.add(notification);
-    }
-
-    public Iterable<PlannedNotification> getPlannedNotificationsFor(DetectableEventType eventType) {
-    	List<PlannedNotification> notificationList = eventToNotificationMap.get(eventType.getUid());
-        if (notificationList == null) {
-        	notificationList = Collections.emptyList();
-        }
-        return notificationList;
-    }
 
 }

@@ -15,10 +15,6 @@ public class PlannedNotificationSupport {
             if (areEqual) { // go deeper
                 // check template and event-type
                 areEqual = LanguageScriptSupport.deepEquals(lhs.getTemplate(), rhs.getTemplate());
-            
-                if (areEqual) {
-                    areEqual = DescribedEntitySupport.deepEquals(lhs.getEventType(), rhs.getEventType());
-                }
             }
         }
         return areEqual;

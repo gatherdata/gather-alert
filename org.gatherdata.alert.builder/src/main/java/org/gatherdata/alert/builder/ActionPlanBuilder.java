@@ -8,9 +8,7 @@ import org.joda.time.DateTime;
 public class ActionPlanBuilder implements FluentBuilder<ActionPlan> {
 
     private final MutableActionPlan actionPlan = new MutableActionPlan();
-    
-    private EventTypeBuilder eventTypeBuilder;
-    
+        
     private ActionPlanBuilder() {
         ;
     }
@@ -20,33 +18,39 @@ public class ActionPlanBuilder implements FluentBuilder<ActionPlan> {
     }
 
     public ActionPlan build() {
-        if (actionPlan.getEventType() == null) {
-            throw new IllegalStateException("ActionPlan.EventType must be specified in DSL");
+        if (actionPlan.getName() == null) {
+            actionPlan.setName("pass tests");
+        }
+        if (actionPlan.getDescription() == null) {
+            actionPlan.setDescription("fix the code, and the tests will pass.");
         }
         if (actionPlan.getDateCreated() == null) {
             actionPlan.setDateCreated(new DateTime());
         }
         if (actionPlan.getUid() == null) {
-            actionPlan.setUid(CbidFactory.createCbid(actionPlan.getEventType().toString() + actionPlan.getDateCreated().toString()));
+            actionPlan.setUid(CbidFactory.createCbid(actionPlan.getName().toString() + actionPlan.getDateCreated().toString()));
         }
         return actionPlan;
     }
     
-    public ActionPlanBuilder lookingFor(EventTypeBuilder eventTypeBuilder) {
-        actionPlan.setEventType(eventTypeBuilder.build());
+    public ActionPlanBuilder named(String nameOfPlan) {
+        actionPlan.setName(nameOfPlan);
+        return this;
+    }
+    
+    public ActionPlanBuilder describedAs(String descriptionOfPlan) {
+        actionPlan.setDescription(descriptionOfPlan);
         return this;
     }
     
     
     public ActionPlanBuilder applyingRules(RuleSetBuilder ruleBuilder) {
-        ruleBuilder.setEventType(actionPlan.getEventType());
         actionPlan.setRuleSet(ruleBuilder.build());
         return this;
     }
 
     public ActionPlanBuilder notifying(PlannedNotificationBuilder... plannedNotifications) {
         for (PlannedNotificationBuilder plannedNotification : plannedNotifications) {
-            plannedNotification.setEventType(actionPlan.getEventType());
             actionPlan.add(plannedNotification.build());
         }
         return this;

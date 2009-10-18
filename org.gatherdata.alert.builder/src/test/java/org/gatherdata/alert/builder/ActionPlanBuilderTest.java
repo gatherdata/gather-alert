@@ -11,13 +11,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.hamcrest.Matcher;
@@ -27,16 +25,15 @@ public class ActionPlanBuilderTest {
 
     @Test
     public void shouldBuildAnActionPlan() throws URISyntaxException {
-        final String TEST_EVENT_NAME = "test event";
-        final String TEST_EVENT_DESCRIPTION = "occurs only during tests";
+        final String ACTION_PLAN_NAME = "test event";
+        final String ACTION_PLAN_DESCRIPTION = "occurs only during tests";
         URI TEST_ADDRESS_URI = new URI("mailto:sysadmin@kollegger.name");
         final String MESSAGE_TEMPLATE_LANGUAGE = "vm";
         final String MESSAGE_TEMPLATE_SCRIPT = "hello world";
         
         ActionPlan builtTestPlan = ActionPlanBuilder.plan()
-            .lookingFor(
-                    event(TEST_EVENT_NAME)
-                    .describedAs(TEST_EVENT_DESCRIPTION))
+            .named(ACTION_PLAN_NAME)
+            .describedAs(ACTION_PLAN_DESCRIPTION)
             .applyingRules(
                     rules("text/xml")
                     .rule(expressedIn("js").script("some javascript expression"))
@@ -49,16 +46,14 @@ public class ActionPlanBuilderTest {
         
         assertThat(builtTestPlan, notNullValue());
         
-        assertThat(builtTestPlan.getEventType(), notNullValue());
-        DetectableEventType builtEventType = builtTestPlan.getEventType();
-        assertThat(builtEventType.getName(), is(TEST_EVENT_NAME));
-        assertThat(builtEventType.getDescription(), is(TEST_EVENT_DESCRIPTION));
+        assertThat(builtTestPlan.getName(), is(ACTION_PLAN_NAME));
+        assertThat(builtTestPlan.getDescription(), is(ACTION_PLAN_DESCRIPTION));
         
         assertThat(builtTestPlan.getRuleSet(), notNullValue());
         RuleSet builtRuleSet = builtTestPlan.getRuleSet();
         assertThat(builtRuleSet.getPredicateCount(), is(equalTo(2)));
-        assertThat(builtRuleSet.getIndicatedEventType(), is(builtEventType));
         assertThat(builtRuleSet.isActive(), is(true));
+        assertThat(builtRuleSet.getPlan(), is(builtTestPlan));
 
         assertThat(builtTestPlan.getNotifications(), notNullValue());
         Iterable<PlannedNotification> builtNotifications = (Iterable<PlannedNotification>) builtTestPlan.getNotifications();
@@ -66,7 +61,7 @@ public class ActionPlanBuilderTest {
         assertThat(firstNotification.getDestination(), is(TEST_ADDRESS_URI));
         assertThat(firstNotification.getTemplate().getLanguage(), is(MESSAGE_TEMPLATE_LANGUAGE));
         assertThat(firstNotification.getTemplate().getScript(), is(MESSAGE_TEMPLATE_SCRIPT));
-        
+        assertThat(firstNotification.getPlan(), is(builtTestPlan));
     }
 
 }

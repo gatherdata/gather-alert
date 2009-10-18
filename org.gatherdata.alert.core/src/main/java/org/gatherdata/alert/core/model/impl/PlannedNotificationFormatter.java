@@ -5,7 +5,7 @@ import org.gatherdata.alert.core.model.PlannedNotification;
 public class PlannedNotificationFormatter {
 
     public static String toLongString(PlannedNotification notification) {
-        return "PlannedNotification [" + notification.getName() + ": " + 
+        return "PlannedNotification [" +
             notification.getDestination() + 
             " \"" + notification.getTemplate() + "\"]";
     }

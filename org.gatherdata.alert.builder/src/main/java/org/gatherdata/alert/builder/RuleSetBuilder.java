@@ -1,7 +1,6 @@
 package org.gatherdata.alert.builder;
 
 import org.apache.commons.lang.NullArgumentException;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.model.impl.MutableRuleSet;
@@ -37,7 +36,12 @@ public class RuleSetBuilder implements FluentBuilder<RuleSet> {
         return this;
     }
 
-    public RuleSet build() {
+    public RuleSetBuilder satisfyAll(boolean shouldSatisfyAll) {
+        ruleset.setSatisfyAll(shouldSatisfyAll);
+        return this;
+    }
+    
+    public MutableRuleSet build() {
         if (!activeWasSet) ruleset.setActive(true);
         if (ruleset.getDateCreated() == null) {
             ruleset.setDateCreated(new DateTime());
@@ -57,11 +61,6 @@ public class RuleSetBuilder implements FluentBuilder<RuleSet> {
         }
 
         return ruleset;
-    }
-
-    protected void setEventType(DetectableEventType indicatedEventType) {
-        this.ruleset.setIndicatedEventType(indicatedEventType);
-    }
-    
+    }    
     
 }

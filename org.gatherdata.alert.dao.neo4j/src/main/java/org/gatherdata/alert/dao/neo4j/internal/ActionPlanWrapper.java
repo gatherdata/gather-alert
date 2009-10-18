@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.model.impl.MutableActionPlan;
@@ -40,20 +39,11 @@ public class ActionPlanWrapper extends DescribedNodeWrapper implements ActionPla
 
     public static final String GATHER_NODETYPE = "ActionPlan";
 
-    private DetectableEventTypeWrapper eventType;
 
     private RuleSetWrapper ruleset;
 
     public ActionPlanWrapper(NeoService neo, Node underlyingNode) {
         super(neo, underlyingNode);
-    }
-
-    public DetectableEventType getEventType() {
-        return this.eventType;
-    }
-
-    public void setEventType(DetectableEventTypeWrapper eventType) {
-        this.eventType = eventType;
     }
 
     public Iterable<PlannedNotification> getNotifications() {

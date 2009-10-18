@@ -4,19 +4,22 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gatherdata.alert.core.model.DetectableEventType;
+import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.commons.db.db4o.model.UniqueEntityDb4o;
-import org.joda.time.DateTime;
 
 public class RuleSetDb4o extends UniqueEntityDb4o implements RuleSet {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8057901469967300031L;
     private String context;
-    private DetectableEventTypeDb4o indicatedEvent;
     private List<LanguageScriptDb4o> predicates = new ArrayList<LanguageScriptDb4o>();
     private boolean isActive;
     private boolean isSatifsyAll;
+    private ActionPlanDb4o plan;
 
     public String getContext() {
         return this.context;
@@ -24,14 +27,6 @@ public class RuleSetDb4o extends UniqueEntityDb4o implements RuleSet {
 
     public void setContext(String context) {
         this.context = context;
-    }
-
-    public DetectableEventType getIndicatedEventType() {
-        return this.indicatedEvent;
-    }
-
-    public void setIndicatedEventType(DetectableEventTypeDb4o indicatedEvent) {
-        this.indicatedEvent = indicatedEvent;
     }
 
     public int getPredicateCount() {
@@ -68,12 +63,19 @@ public class RuleSetDb4o extends UniqueEntityDb4o implements RuleSet {
         if (template != null) {
             super.copy(template);
             setContext(template.getContext());
-            setIndicatedEventType((DetectableEventTypeDb4o) new DetectableEventTypeDb4o().copy(template.getIndicatedEventType()));
             setIsActive(template.isActive());
             setIsSatisfyAll(template.isSatisfyAll());
             addAll(template.getPredicates());
         }
         return this;
+    }
+    
+    public ActionPlan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(ActionPlanDb4o plan) {
+        this.plan = plan;
     }
 
 }

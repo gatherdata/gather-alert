@@ -17,12 +17,7 @@ public class RuleSetNodeAdapter implements NodeAdapter<RuleSet, RuleSetWrapper> 
 
         if (RuleSetWrapper.GATHER_NODETYPE.equals(nodeToAdapt.getProperty(GatherNodeWrapper.GATHER_NODETYPE_PROPERTY))) {
             rulesetWrapper = new RuleSetWrapper(neo, nodeToAdapt);
-            
-            // get the eventType
-            Relationship eventTypeRelationship = nodeToAdapt.getSingleRelationship(RuleSetWrapper.RuleSetRelationships.DETECTS_EVENTS_OF_TYPE, Direction.OUTGOING);
-            DetectableEventTypeWrapper eventTypeWrapper = new DetectableEventTypeWrapper(neo, eventTypeRelationship.getEndNode());
-            rulesetWrapper.setEventType(eventTypeWrapper);
-            
+                        
             // attach predicates
             for (Relationship predicateRelationship : nodeToAdapt.getRelationships(RuleSetWrapper.RuleSetRelationships.EVALUATES_WITH)) {
                 Node predicateNode = predicateRelationship.getEndNode();

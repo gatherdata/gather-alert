@@ -8,16 +8,13 @@ import org.joda.time.DateTime;
 public interface DetectedEvent extends UniqueEntity {
     
     public DateTime getDateOfDetection();
-    
-    public DetectableEventType getEventType();
-    
+        
     /**
-     * The uid of the ruleset which 
-     * detected the event.
+     * The ActionPlan which detected the event.
      * 
      * @return
      */
-    public RuleSet getDetectedBy();
+    public ActionPlan getDetectedBy();
     
     /**
      * The subject which was evaluated by the

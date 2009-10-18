@@ -3,10 +3,12 @@ package org.gatherdata.alert.core.model.impl;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
-import org.gatherdata.alert.core.model.DetectableEventType;
+import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.commons.model.UniqueEntity;
@@ -15,12 +17,25 @@ import org.gatherdata.commons.model.impl.MutableEntity;
 
 public class MutableRuleSet extends MutableEntity implements RuleSet {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8055149590454066961L;
+    
+    private ActionPlan plan;
     private String context;
-    private DetectableEventType indicatedEventType;
-    private final List<LanguageScript> predicates = new ArrayList<LanguageScript>();
+    private final Set<MutableLanguageScript> predicates = new HashSet<MutableLanguageScript>();
     private boolean isSatisfyAll;
     private boolean isActive;
+
+    public ActionPlan getPlan() {
+        return this.plan;
+    }
     
+    public void setPlan(ActionPlan plan) {
+        this.plan = plan;
+    }
+
     public String getContext() {
         return this.context;
     }
@@ -29,19 +44,11 @@ public class MutableRuleSet extends MutableEntity implements RuleSet {
         this.context = context;
     }
 
-    public DetectableEventType getIndicatedEventType() {
-        return this.indicatedEventType;
-    }
-    
-    public void setIndicatedEventType(DetectableEventType indicatedEventType) {
-        this.indicatedEventType = indicatedEventType;
-    }
-
-    public Iterable<LanguageScript> getPredicates() {
+    public Iterable<? extends LanguageScript> getPredicates() {
         return this.predicates;
     }
     
-    public void add(LanguageScript script) {
+    public void add(MutableLanguageScript script) {
         predicates.add(script);
     }
     
@@ -71,17 +78,13 @@ public class MutableRuleSet extends MutableEntity implements RuleSet {
             setActive(template.isActive());
             setSatisfyAll(template.isSatisfyAll());
             setContext(template.getContext());
-            DetectableEventType templateEvent = template.getIndicatedEventType();
-            if (templateEvent != null) {
-                setIndicatedEventType(new MutableDetectableEventType().copy(templateEvent));
-            } else {
-                setIndicatedEventType(null);
-            }
             predicates.clear();
             Iterable<? extends LanguageScript> templatePredicates = template.getPredicates();
             if (templatePredicates != null) {
                 for (LanguageScript predicate : templatePredicates) {
-                    add(new MutableLanguageScript().copy(predicate));
+                    MutableLanguageScript copiedScript = new MutableLanguageScript();
+                    copiedScript.copy(predicate);
+                    add(copiedScript);
                 }
             }
         }
@@ -91,14 +94,46 @@ public class MutableRuleSet extends MutableEntity implements RuleSet {
     public RuleSet update(RuleSet template) {
         if (template != null) {
             super.update(template);
+            if (template.getContext() != null) {
+                setContext(template.getContext());
+            }
+            for (LanguageScript templatePredicate : template.getPredicates()) {
+                if (!predicates.contains(templatePredicate)) {
+                    MutableLanguageScript copiedScript = new MutableLanguageScript();
+                    copiedScript.copy(templatePredicate);
+                    add(copiedScript);
+                } else {
+                    MutableLanguageScript existingPredicate = findPredicate(templatePredicate.getUid());
+                    if (templatePredicate.getLanguage() != null) {
+                        existingPredicate.setLanguage(templatePredicate.getLanguage());
+                    }
+                    if (templatePredicate.getScript() != null) {
+                        existingPredicate.setScript(templatePredicate.getScript());
+                    }
+                    predicates.remove(existingPredicate);
+                    add(existingPredicate);
+                }
+            }
         }
         return this;
     }
 
+    public MutableLanguageScript findPredicate(URI uid) {
+        MutableLanguageScript foundPredicate = null;
+        for (MutableLanguageScript possiblePredicate : predicates) {
+            if (possiblePredicate.getUid().equals(uid)) {
+                foundPredicate = new MutableLanguageScript();
+                foundPredicate.copy(possiblePredicate);
+            }
+        }
+        return foundPredicate;
+    }
+
     @Override
     public String toString() {
-        return "RuleSet [context=" + context + ", indicatedEventType=" + indicatedEventType + ", isActive="
-                + isActive + ", isSatisfyAll=" + isSatisfyAll + ", predicates=" + predicates + "]";
+        return "RuleSet [context=" + context + 
+            ", isActive=" + isActive + ", isSatisfyAll=" + isSatisfyAll + 
+            ", predicates=" + predicates + "]";
     }
 
     public int getPredicateCount() {
@@ -112,7 +147,9 @@ public class MutableRuleSet extends MutableEntity implements RuleSet {
         }
         return super.selfIdentify();
     }
-    
-    
+
+    public void clearPredicates() {
+        predicates.clear();
+    }
 
 }

@@ -3,7 +3,7 @@ package org.gatherdata.alert.dao.neo4j.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.gatherdata.alert.core.model.DetectableEventType;
+import org.gatherdata.alert.core.model.ActionPlan;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.commons.model.neo4j.GatherNodeWrapper;
@@ -19,7 +19,6 @@ public class RuleSetWrapper extends UniqueNodeWrapper implements RuleSet, Gather
     public static final String IS_ACTIVE_PROPERTY = "active";
     private static final String IS_SATISFY_ALL_PROPERTY = "satisfyAll";
 
-    private DetectableEventType eventType;
     private Collection<LanguageScriptWrapper> predicates = new ArrayList<LanguageScriptWrapper>();
 
     public enum RuleSetRelationships implements RelationshipType {
@@ -37,19 +36,6 @@ public class RuleSetWrapper extends UniqueNodeWrapper implements RuleSet, Gather
 
     public void setContext(String context) {
         getUnderlyingNode().setProperty(CONTEXT_PROPERTY, context);
-    }
-
-    public DetectableEventType getIndicatedEventType() {
-        return this.eventType;
-    }
-
-    public void setIndicatedEventType(DetectableEventTypeWrapper eventType) {
-        getUnderlyingNode().createRelationshipTo(eventType.getUnderlyingNode(), RuleSetWrapper.RuleSetRelationships.DETECTS_EVENTS_OF_TYPE);
-        this.eventType = eventType;
-    }
-
-    public void setEventType(DetectableEventTypeWrapper eventType) {
-        this.eventType = eventType;
     }
 
     public int getPredicateCount() {
@@ -79,6 +65,11 @@ public class RuleSetWrapper extends UniqueNodeWrapper implements RuleSet, Gather
     
     public void add(LanguageScriptWrapper languageScript) {
         this.predicates.add(languageScript);
+    }
+
+    public ActionPlan getPlan() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

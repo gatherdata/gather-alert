@@ -27,7 +27,7 @@ public class LanguageScriptBuilder {
         return this;
     }
 
-    public LanguageScript build() {
+    public MutableLanguageScript build() {
         if (languageScript.getLanguage() == null) {
             throw new NullArgumentException("language");
         }

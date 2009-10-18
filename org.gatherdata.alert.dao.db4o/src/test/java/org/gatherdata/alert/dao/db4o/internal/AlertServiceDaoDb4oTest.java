@@ -1,6 +1,5 @@
 package org.gatherdata.alert.dao.db4o.internal;
 
-import static org.gatherdata.alert.builder.EventTypeBuilder.event;
 import static org.gatherdata.alert.builder.LanguageScriptBuilder.expressedIn;
 import static org.gatherdata.alert.builder.PlannedNotificationBuilder.address;
 import static org.gatherdata.alert.builder.RuleSetBuilder.rules;
@@ -20,13 +19,11 @@ import java.util.Set;
 
 import org.gatherdata.alert.builder.ActionPlanBuilder;
 import org.gatherdata.alert.core.model.ActionPlan;
-import org.gatherdata.alert.core.model.DetectableEventType;
 import org.gatherdata.alert.core.model.LanguageScript;
 import org.gatherdata.alert.core.model.PlannedNotification;
 import org.gatherdata.alert.core.model.RuleSet;
 import org.gatherdata.alert.core.model.impl.ActionPlanSupport;
 import org.gatherdata.alert.core.model.impl.MutableActionPlan;
-import org.gatherdata.alert.core.model.impl.MutableDetectableEventType;
 import org.gatherdata.alert.core.spi.AlertServiceDao;
 import org.gatherdata.alert.dao.db4o.internal.AlertServiceDaoDb4o;
 import org.gatherdata.commons.spi.BaseStorageDaoTest;
@@ -78,8 +75,8 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
     protected ActionPlan createMockEntity() {
         mockCount++;
         ActionPlan mockEntity = ActionPlanBuilder.plan()
-        	.lookingFor(
-        			event("barWithinFoo" + mockCount).describedAs("any occurrence of 'bar' within 'foo'" + rnd.nextInt(1000)))
+        	.named("barWithinFoo" + mockCount)
+        	.describedAs("any occurrence of 'bar' within 'foo'" + rnd.nextInt(1000))
         			.applyingRules(
         					rules("text/xml")
         					.rule(expressedIn("js").script("/bar/.test(body)"))
@@ -140,17 +137,4 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
         endTransaction();
     }
     
-    @Test
-    public void shouldGetPlannedNotificationsRelatedToEventType() {
-        ActionPlan originalPlan = createMockEntity();
-        dao.save(originalPlan);
-        
-        Collection<PlannedNotification> retrievedNotifications = new ArrayList<PlannedNotification>();
-        retrievedNotifications.addAll((Collection<? extends PlannedNotification>) dao.getPlannedNotificationsFor(originalPlan.getEventType()));
-        
-        Collection<PlannedNotification> originalNotifications = new ArrayList<PlannedNotification>();
-        originalNotifications.addAll((Collection<? extends PlannedNotification>) originalPlan.getNotifications());
-        assertThat(retrievedNotifications, containsAll(originalNotifications));
-    }
-
 }

@@ -56,31 +56,6 @@
 
   <packaging>pom</packaging>
 
-  <repositories>
-    <repository>
-      <id>com.springsource.repository.bundles.release</id>
-      <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
-      <url>http://repository.springsource.com/maven/bundles/release</url>
-    </repository>
-    <repository>
-      <id>com.springsource.repository.bundles.external</id>
-      <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-      <url>http://repository.springsource.com/maven/bundles/external</url>
-    </repository>
-    <repository>
-      <id>org.ops4j</id>
-      <name>OPS4J Maven Repository</name>
-      <url>http://repository.ops4j.org/maven2/</url>
-    </repository>
-    <repository>
-      <id>ops4j.snapshots</id>
-      <url>http://repository.ops4j.org/mvn-snapshots/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-  </repositories>
-
   <modules>
       <module>poms</module>
       <module>org.gatherdata.alert.core</module>
@@ -152,6 +127,16 @@
               <dao.provision>mvn:org.gatherdata.gather-alert/org.gatherdata.alert.dao.neo4j/${gather-alert.version}@2</dao.provision>
               <dao.provision-dependencies>scan-features:mvn:org.neo4j.apoc-bundle/org.neo4j.neo.karaf/1.0-SNAPSHOT/xml/features!/neo4j-meta@2</dao.provision-dependencies>
           </properties>
+          <repositories>
+              <repository>
+                  <id>neo4j-public-repository</id>
+                  <name>Publically available Maven 2 repository for Neo4j</name>
+                  <url>http://m2.neo4j.org </url>
+                  <snapshots>
+                      <enabled>true</enabled>
+                  </snapshots>
+              </repository>
+          </repositories>
       </profile>
   </profiles>
 
@@ -207,5 +192,65 @@
           </plugin>
       </plugins>
   </build>
+
+  <repositories>
+      <repository>
+          <id>gather.releases</id>
+          <name>GATHERdata Releases</name>
+          <url>http://repository.gatherdata.org/content/repositories/releases</url>
+          <releases>
+              <enabled>true</enabled>
+          </releases>
+          <snapshots>
+              <enabled>false</enabled>
+          </snapshots>
+      </repository>
+      <repository>
+          <id>gather.snapshots</id>
+          <name>GATHERdata Snapshots</name>
+          <url>http://repository.gatherdata.org/content/repositories/snapshots</url>
+          <releases>
+              <enabled>false</enabled>
+          </releases>
+          <snapshots>
+              <enabled>true</enabled>
+          </snapshots>
+      </repository>
+      <repository>
+          <id>com.springsource.repository.bundles.release</id>
+          <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+          <url>http://repository.springsource.com/maven/bundles/release</url>
+      </repository>
+      <repository>
+          <id>com.springsource.repository.bundles.external</id>
+          <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+          <url>http://repository.springsource.com/maven/bundles/external</url>
+      </repository>
+      <repository>
+          <id>org.ops4j</id>
+          <name>OPS4J Maven Repository</name>
+          <url>http://repository.ops4j.org/maven2/</url>
+      </repository>
+      <repository>
+          <id>ops4j.snapshots</id>
+          <url>http://repository.ops4j.org/mvn-snapshots/</url>
+          <releases>
+              <enabled>false</enabled>
+          </releases>
+      </repository>
+  </repositories>
+
+  <distributionManagement>
+      <repository>
+          <id>gather.releases</id>
+          <name>GATHERdata Releases</name>
+          <url>http://repository.gatherdata.org/content/repositories/releases</url>
+      </repository>
+      <snapshotRepository>
+          <id>gather.snapshots</id>
+          <name>GATHERdata Snapshots</name>
+          <url>http://repository.gatherdata.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+  </distributionManagement>
 
 </project>

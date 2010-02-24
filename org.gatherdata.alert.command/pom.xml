@@ -46,7 +46,7 @@
             <artifactId>peaberry</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.ops4j.peaberry.dependencies</groupId>
+            <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
         </dependency>
         <dependency>

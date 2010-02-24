@@ -84,6 +84,12 @@ public class NeoAlertServiceDaoTest extends BaseStorageDaoTest<ActionPlan, Alert
         this.transaction = neo.neo().beginTx();
     }
 
+	@Override
+	protected void rollbackTransaction() {
+        this.transaction.failure();
+        this.transaction.finish();
+	}
+
     @Override
     protected void endTransaction() {
         this.transaction.success();

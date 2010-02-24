@@ -52,7 +52,7 @@
             <artifactId>peaberry</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.ops4j.peaberry.dependencies</groupId>
+            <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
         </dependency>
         <dependency>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.gatherdata.gather-commons</groupId>
             <artifactId>org.gatherdata.commons.db.db4o</artifactId>
-            <version>${gather-commons.version}</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.gatherdata.gather-alert</groupId>

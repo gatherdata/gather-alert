@@ -18,8 +18,6 @@ import org.gatherdata.alert.core.model.mock.MockActionPlanFactory;
 import org.gatherdata.alert.core.spi.AlertService;
 import org.ops4j.peaberry.Export;
 import org.ops4j.peaberry.Import;
-import org.ops4j.peaberry.activation.Start;
-import org.ops4j.peaberry.activation.Stop;
 import org.ops4j.peaberry.util.AbstractWatcher;
 
 import com.google.inject.AbstractModule;

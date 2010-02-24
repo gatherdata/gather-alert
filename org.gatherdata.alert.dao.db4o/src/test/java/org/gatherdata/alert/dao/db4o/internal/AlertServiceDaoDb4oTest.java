@@ -73,6 +73,11 @@ public class AlertServiceDaoDb4oTest extends BaseStorageDaoTest<ActionPlan, Aler
         
     }
 
+	@Override
+	protected void rollbackTransaction() {
+		db4o.rollback();
+	}
+
     @Override
     protected void endTransaction() {
         db4o.commit();

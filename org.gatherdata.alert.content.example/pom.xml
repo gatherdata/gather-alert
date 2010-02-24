@@ -40,14 +40,9 @@
 			<artifactId>peaberry</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.ops4j.peaberry.dependencies</groupId>
+			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.gatherdata.gather-commons</groupId>
-            <artifactId>org.ops4j.peaberry.activation</artifactId>
-        </dependency>
-
 		<dependency>
 			<groupId>org.gatherdata.gather-alert</groupId>
 			<artifactId>org.gatherdata.alert.core</artifactId>

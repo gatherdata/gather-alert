@@ -17,12 +17,12 @@
     <bundles.configuration.location>${basedir}/config</bundles.configuration.location>
 
     <!-- gather versions -->
-    <gather-commons.version>1.0-SNAPSHOT</gather-commons.version>
+    <gather-commons.version>1.0.1-SNAPSHOT</gather-commons.version>
     <gather-alert.version>1.0-SNAPSHOT</gather-alert.version>
 
     <!-- 3rd party versions -->
     <peaberry.version>1.1.1</peaberry.version>
-    <guice.version>2.0-SNAPSHOT</guice.version>
+    <guice.version>2.0</guice.version>
     <aopalliance.version>1.0_1</aopalliance.version>
     <peaberry-activation.version>1.2-SNAPSHOT_1</peaberry-activation.version>
     <joda-time.version>1.5.2_1</joda-time.version>
@@ -148,8 +148,9 @@
               <version>1.4</version>
               <configuration>
                   <framework>felix</framework>
-                  <profiles>log,web</profiles>
-                  <!-- noDependencies=true to force all deployabled bundles to be part of a feature -->
+                  <args>etc/runner.args</args>
+                  <profiles>karaf.shell</profiles>
+                  <!-- noDependencies=true to force all required bundles to be part of a feature -->
                   <noDependencies>true</noDependencies>
                   <provision>
                       <param>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.10@1</param>

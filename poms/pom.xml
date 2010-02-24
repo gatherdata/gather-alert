@@ -117,21 +117,16 @@
               <scope>provided</scope>
           </dependency>
           <dependency>
-              <groupId>org.ops4j.peaberry.dependencies</groupId>
-              <artifactId>guice</artifactId>
-              <version>${guice.version}</version>
-              <scope>provided</scope>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+            <scope>provided</scope>
           </dependency>
           <dependency>
               <groupId>org.apache.servicemix.bundles</groupId>
               <artifactId>org.apache.servicemix.bundles.aopalliance</artifactId>
               <version>${aopalliance.version}</version>
               <scope>provided</scope>
-          </dependency>
-          <dependency>
-              <groupId>org.gatherdata.gather-commons</groupId>
-              <artifactId>org.ops4j.peaberry.activation</artifactId>
-              <version>${peaberry-activation.version}</version>
           </dependency>
           <dependency>
               <groupId>org.ops4j.pax.logging</groupId>
